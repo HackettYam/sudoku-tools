@@ -333,7 +333,7 @@ export default [
       '@stylistic/semi': ['error', 'never'],
       '@stylistic/semi-style': ['error', 'last'],
       '@stylistic/quotes': ['error', 'single', {
-        allowTemplateLiterals: 'always',
+        allowTemplateLiterals: true,
         avoidEscape: true,
       }],
       '@stylistic/curly-newline': ['error', {
@@ -390,7 +390,6 @@ export default [
       '@stylistic/space-before-function-paren': ['error', {
         anonymous: 'always',
         asyncArrow: 'always',
-        catch: 'always',
         named: 'never',
       }],
 
