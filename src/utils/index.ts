@@ -1,0 +1,6 @@
+export { cloneBoard } from './cloneBoard'
+export { swapDigits } from './swapDigits'
+export { swapRowWithinBand } from './swapRowWithinBand'
+export { swapColWithinStack } from './swapColWithinStack'
+export { randomizeBoard } from './randomizeBoard'
+export { removeCells } from './removeCells'
