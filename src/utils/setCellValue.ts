@@ -1,20 +1,6 @@
-import type { BoardType } from '@/models'
+import type { BoardType, SetCellOptions } from '@/models'
 
 import { cloneBoard } from './cloneBoard'
-
-/**
- * Cell update options for setCellValue
- */
-export interface SetCellOptions {
-  /** Column index (0-8) */
-  col: number
-
-  /** Row index (0-8) */
-  row: number
-
-  /** Value to set (1-9 or 0 for empty) */
-  value: number
-}
 
 /**
  * Sets a value in a cell and returns a new board (immutable operation).

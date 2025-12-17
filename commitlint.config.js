@@ -45,6 +45,7 @@ module.exports = {
         'solver', // Puzzle solving
         'validator', // Validation utilities
         'utils', // General utilities
+        'models', // Model definitions
         'types', // Type definitions
         'deps', // Dependencies
         'config', // Configuration related

@@ -1,13 +1,5 @@
 import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '@/constants'
-import type { BoardCellType, BoardType } from '@/models'
-
-/**
- * Result type for getHint function
- */
-export interface HintResult extends BoardCellType {
-  /** The correct value for the cell */
-  value: number
-}
+import type { BoardType, HintResult } from '@/models'
 
 /**
  * Gets a hint by finding an empty cell and returning its correct value from the solution.

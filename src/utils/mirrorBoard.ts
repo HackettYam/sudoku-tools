@@ -1,10 +1,5 @@
 import { SUDOKU_SIZE } from '@/constants'
-import type { BoardType } from '@/models'
-
-/**
- * Mirror direction options
- */
-export type MirrorDirection = 'horizontal' | 'vertical'
+import type { BoardType, MirrorDirection } from '@/models'
 
 /**
  * Mirrors a Sudoku board horizontally or vertically.

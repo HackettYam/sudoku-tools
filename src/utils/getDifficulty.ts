@@ -1,28 +1,13 @@
 import { SUDOKU_SIZE } from '@/constants'
-import { type BoardType, Difficulty, type DifficultyType } from '@/models'
+import {
+  type BoardType,
+  Difficulty,
+  type DifficultyResult,
+  type DifficultyType,
+} from '@/models'
 
 import { countEmptyCells } from './countEmptyCells'
 import { getCandidates } from './getCandidates'
-
-/**
- * Result of difficulty analysis
- */
-interface DifficultyResult {
-  /** Average number of candidates per empty cell */
-  avgCandidates: number
-
-  /** The estimated difficulty level */
-  difficulty: DifficultyType
-
-  /** Number of empty cells in the puzzle */
-  emptyCells: number
-
-  /** Minimum candidates found in any empty cell */
-  minCandidates: number
-
-  /** Score used to determine difficulty (lower = easier) */
-  score: number
-}
 
 interface ScoreParams {
   avgCandidates: number
@@ -150,5 +135,3 @@ export function getDifficulty(board: BoardType): DifficultyResult {
     score: Math.round(score * 100) / 100,
   }
 }
-
-export type { DifficultyResult }

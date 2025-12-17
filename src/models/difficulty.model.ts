@@ -47,3 +47,23 @@ export type DifficultyType =
   | Difficulty.Normal
   | Difficulty.Hard
   | Difficulty.Expert
+
+/**
+ * Result of difficulty analysis
+ */
+export interface DifficultyResult {
+  /** Average number of candidates per empty cell */
+  avgCandidates: number
+
+  /** The estimated difficulty level */
+  difficulty: DifficultyType
+
+  /** Number of empty cells in the puzzle */
+  emptyCells: number
+
+  /** Minimum candidates found in any empty cell */
+  minCandidates: number
+
+  /** Score used to determine difficulty (lower = easier) */
+  score: number
+}

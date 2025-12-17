@@ -106,6 +106,18 @@ Type-safe representation of valid Sudoku cell values.
 type CellValue = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 ```
 
+#### `SetCellOptions`
+
+Options for the `setCellValue` function.
+
+```typescript
+interface SetCellOptions {
+  col: number    // Column index (0-8)
+  row: number    // Row index (0-8)
+  value: number  // Value to set (0-9)
+}
+```
+
 #### `GameState`
 
 Represents the complete state of a Sudoku game.
@@ -146,6 +158,40 @@ enum DifficultyHints {
   Hard = 30,
   Expert = 20,
 }
+```
+
+#### `DifficultyResult`
+
+Result of difficulty analysis returned by `getDifficulty`.
+
+```typescript
+interface DifficultyResult {
+  avgCandidates: number   // Average candidates per empty cell
+  difficulty: DifficultyType
+  emptyCells: number      // Number of empty cells
+  minCandidates: number   // Minimum candidates found
+  score: number           // Numeric difficulty score
+}
+```
+
+#### `HintResult`
+
+Result type for `getHint` function.
+
+```typescript
+interface HintResult {
+  col: number    // Column index
+  row: number    // Row index
+  value: number  // Correct value for the cell
+}
+```
+
+#### `MirrorDirection`
+
+Direction options for `mirrorBoard` function.
+
+```typescript
+type MirrorDirection = 'horizontal' | 'vertical'
 ```
 
 ---
