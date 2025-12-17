@@ -48,7 +48,7 @@ module.exports = {
         'deps', // Dependencies
         'config', // Configuration related
         'ci', // CI/CD related
-        'test', // Test related
+        'testing', // Test related
         'release', // Release related
       ],
     ],

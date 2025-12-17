@@ -18,9 +18,8 @@ export default [
       'node_modules/**',
       'coverage/**',
       '*.config.js',
+      '*.config.ts',
       'commitlint.config.js',
-      '**/.next/**',
-      '**/out/**',
       '.lintstagedrc.json',
     ],
   },
@@ -376,10 +375,10 @@ export default [
         objectsInArrays: true,
         singleValue: false,
       }],
-      '@stylistic/array-bracket-newline': ['error', { minItems: 3, multiline: true }],
+      '@stylistic/array-bracket-newline': ['error', { minItems: 4, multiline: true }],
       '@stylistic/array-element-newline': ['error', {
         consistent: true,
-        minItems: 3,
+        minItems: 4,
         multiline: true,
       }],
 
