@@ -1231,6 +1231,135 @@ console.log(`Remaining: ${stats.empty}`)
 
 ---
 
+### Internal Utilities
+
+These functions are used internally but are also exported for advanced use cases.
+
+#### `findEmptyCell(board)`
+
+Finds the first empty cell in the board.
+
+**Parameters:**
+
+- `board`: `BoardType` - The Sudoku board.
+
+**Returns:**
+
+- `{ row, col } | null` - Position of the first empty cell or null if none.
+
+---
+
+#### `isValidPlacement(board, position)`
+
+Checks if placing a value at a specific position is valid.
+
+**Parameters:**
+
+- `board`: `BoardType` - The Sudoku board.
+- `position`: `CellPosition` - Object with `row`, `col`, and `value`.
+
+**Returns:**
+
+- `boolean` - True if the placement is valid.
+
+---
+
+#### `backtrack(board)`
+
+Internal recursive backtracking solver. Mutates the board.
+
+**Parameters:**
+
+- `board`: `BoardType` - The Sudoku board to solve.
+
+**Returns:**
+
+- `boolean` - True if solved, false otherwise.
+
+---
+
+#### `countSolutions(board, count?)`
+
+Counts solutions using backtracking, stopping at 2.
+
+**Parameters:**
+
+- `board`: `BoardType` - The Sudoku board.
+- `count`: `number` - Initial count (default: 0).
+
+**Returns:**
+
+- `number` - Number of solutions found (max 2).
+
+---
+
+#### `shuffleArray(array)`
+
+Shuffles an array using Fisher-Yates algorithm.
+
+**Parameters:**
+
+- `array`: `T[]` - The array to shuffle.
+
+**Returns:**
+
+- `T[]` - A new shuffled array.
+
+---
+
+#### `getAllCellPositions()`
+
+Gets all 81 cell positions in random order.
+
+**Returns:**
+
+- `[number, number][]` - Array of [row, col] tuples.
+
+---
+
+#### `analyzeCandidates(board, emptyCount)`
+
+Analyzes candidates for all empty cells in a board.
+
+**Parameters:**
+
+- `board`: `BoardType` - The Sudoku board.
+- `emptyCount`: `number` - Number of empty cells.
+
+**Returns:**
+
+- `AnalysisResult` - Object with `avg`, `min`, `total`, `fewRatio`.
+
+---
+
+#### `calculateDifficultyScore(params)`
+
+Calculates a numeric difficulty score.
+
+**Parameters:**
+
+- `params`: `ScoreParams` - Object with `emptyCells`, `avgCandidates`, `minCandidates`, `fewCandidatesRatio`.
+
+**Returns:**
+
+- `number` - Score between 0-100.
+
+---
+
+#### `scoreToDifficulty(score)`
+
+Converts a numeric score to a difficulty level.
+
+**Parameters:**
+
+- `score`: `number` - Difficulty score (0-100).
+
+**Returns:**
+
+- `DifficultyType` - The corresponding difficulty level.
+
+---
+
 ## TypeScript Support
 
 This library is written in TypeScript and provides full type definitions. All exports are properly typed:

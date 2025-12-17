@@ -1,56 +1,9 @@
-import { SUDOKU_SIZE } from '@/constants'
-import {
-  type BoardType,
-  Difficulty,
-  type DifficultyResult,
-  type DifficultyType,
-} from '@/models'
+import { type BoardType, Difficulty, type DifficultyResult } from '@/models'
 
+import { analyzeCandidates } from './analyzeCandidates'
+import { calculateDifficultyScore } from './calculateDifficultyScore'
 import { countEmptyCells } from './countEmptyCells'
-import { getCandidates } from './getCandidates'
-
-interface ScoreParams {
-  avgCandidates: number
-  emptyCells: number
-  fewCandidatesRatio: number
-  minCandidates: number
-}
-
-function calculateDifficultyScore(params: ScoreParams): number {
-  const { avgCandidates, emptyCells, fewCandidatesRatio, minCandidates } = params
-
-  const emptyWeight = 0.4
-  const avgCandidatesWeight = 0.3
-  const minCandidatesWeight = 0.15
-  const fewCandidatesWeight = 0.15
-
-  const emptyScore = (emptyCells / 64) * 100
-  const avgScore = ((avgCandidates - 1) / 8) * 100
-  const minScore = minCandidates === 1 ? 0 : ((minCandidates - 1) / 8) * 100
-  const fewScore = (1 - fewCandidatesRatio) * 100
-
-  return (emptyScore * emptyWeight)
-    + (avgScore * avgCandidatesWeight)
-    + (minScore * minCandidatesWeight)
-    + (fewScore * fewCandidatesWeight)
-}
-
-function scoreToDifficulty(score: number): DifficultyType {
-  if (score < 20) {
-    return Difficulty.Novice
-  }
-  if (score < 35) {
-    return Difficulty.Easy
-  }
-  if (score < 50) {
-    return Difficulty.Normal
-  }
-  if (score < 65) {
-    return Difficulty.Hard
-  }
-
-  return Difficulty.Expert
-}
+import { scoreToDifficulty } from './scoreToDifficulty'
 
 /**
  * Estimates the difficulty of a Sudoku puzzle based on various factors:
@@ -73,39 +26,6 @@ function scoreToDifficulty(score: number): DifficultyType {
  * console.log(result.avgCandidates) // ~4.5
  * ```
  */
-interface AnalysisResult {
-  avg: number
-  fewRatio: number
-  min: number
-  total: number
-}
-
-function analyzeCandidates(board: BoardType, emptyCount: number): AnalysisResult {
-  let totalCandidates = 0
-  let minCandidates = SUDOKU_SIZE
-  let cellsWithFewCandidates = 0
-
-  for (let row = 0; row < SUDOKU_SIZE; row++) {
-    for (let col = 0; col < SUDOKU_SIZE; col++) {
-      if (board[row][col] === 0) {
-        const candidates = getCandidates(board, row, col)
-        const count = candidates.length
-
-        totalCandidates += count
-        if (count < minCandidates) minCandidates = count
-        if (count <= 2) cellsWithFewCandidates++
-      }
-    }
-  }
-
-  return {
-    avg: totalCandidates / emptyCount,
-    fewRatio: cellsWithFewCandidates / emptyCount,
-    min: minCandidates,
-    total: totalCandidates,
-  }
-}
-
 export function getDifficulty(board: BoardType): DifficultyResult {
   const emptyCount = countEmptyCells(board)
 
