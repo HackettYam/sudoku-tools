@@ -3,7 +3,7 @@ import type { BoardType } from '../models/board.model'
 /**
  * Swaps two random rows within the same 3x3 band
  */
-export function swapRowWithinBand (board: BoardType, band: number): void {
+export function swapRowWithinBand(board: BoardType, band: number): void {
   const start = band * 3
   const r1 = start + Math.floor(Math.random() * 3)
   let r2 = start + Math.floor(Math.random() * 3)

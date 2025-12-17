@@ -1,12 +1,12 @@
+import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '../constants/sudoku.constants'
 import type { BoardType } from '../models/board.model'
-import { SUDOKU_EMPTY, SUDOKU_SIZE } from '../constants/sudoku.constants'
 
 /**
  * Removes cells from the board until reaching the desired number of hints.
  * Leaves the number of hints according to the difficulty.
  */
-export function removeCells (board: BoardType, hints: number): void {
-  let cellsToRemove = SUDOKU_SIZE * SUDOKU_SIZE - hints
+export function removeCells(board: BoardType, hints: number): void {
+  let cellsToRemove = (SUDOKU_SIZE * SUDOKU_SIZE) - hints
   const cells: [number, number][] = []
 
   for (let r = 0; r < SUDOKU_SIZE; r++) {
@@ -24,7 +24,7 @@ export function removeCells (board: BoardType, hints: number): void {
   // Remove cells
   for (let i = 0; i < cells.length && cellsToRemove > 0; i++) {
     const [r, c] = cells[i]
-    board[r][c] = SUDOKU_EMPTY
+    board[r][c] = SUDOKU_EMPTY_CELL
     cellsToRemove--
   }
 }

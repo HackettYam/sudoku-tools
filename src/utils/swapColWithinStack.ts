@@ -1,10 +1,10 @@
-import type { BoardType } from '../models/board.model'
 import { SUDOKU_SIZE } from '../constants/sudoku.constants'
+import type { BoardType } from '../models/board.model'
 
 /**
  * Swaps two random columns within the same 3x3 stack
  */
-export function swapColWithinStack (board: BoardType, stack: number): void {
+export function swapColWithinStack(board: BoardType, stack: number): void {
   const start = stack * 3
   const c1 = start + Math.floor(Math.random() * 3)
   let c2 = start + Math.floor(Math.random() * 3)

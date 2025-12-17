@@ -5,7 +5,7 @@ export { Difficulty, DifficultyHints, type DifficultyType } from './models'
 // Constants
 export {
   SUDOKU_SIZE,
-  SUDOKU_EMPTY,
+  SUDOKU_EMPTY_CELL,
   SUDOKU_BASE_BOARD,
   SUDOKU_DIFFICULTY_HINTS,
 } from './constants'

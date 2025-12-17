@@ -1,7 +1,7 @@
-import type { BoardType } from '../models/board.model'
+import { swapColWithinStack } from './swapColWithinStack'
 import { swapDigits } from './swapDigits'
 import { swapRowWithinBand } from './swapRowWithinBand'
-import { swapColWithinStack } from './swapColWithinStack'
+import type { BoardType } from '../models/board.model'
 
 /**
  * Applies transformations to a Sudoku board to obtain randomness:
@@ -9,11 +9,12 @@ import { swapColWithinStack } from './swapColWithinStack'
  * - Permutes rows within 3x3 bands
  * - Permutes columns within 3x3 stacks
  */
-export function randomizeBoard (board: BoardType): void {
+export function randomizeBoard(board: BoardType): void {
   // Permute digits (swap between pairs randomly)
   for (let i = 0; i < 5; i++) {
     const d1 = 1 + Math.floor(Math.random() * 9)
     const d2 = 1 + Math.floor(Math.random() * 9)
+
     if (d1 !== d2) {
       swapDigits(board, d1, d2)
     }

@@ -1,3 +1,6 @@
+/* eslint-disable @stylistic/array-bracket-newline */
+/* eslint-disable @stylistic/array-element-newline */
+
 import { Difficulty, DifficultyHints } from '../models/difficulty.model'
 
 /**
@@ -8,7 +11,7 @@ export const SUDOKU_SIZE = 9
 /**
  * Value representing an empty cell
  */
-export const SUDOKU_EMPTY = 0
+export const SUDOKU_EMPTY_CELL = 0
 
 /**
  * A valid solved Sudoku board used as base for generation

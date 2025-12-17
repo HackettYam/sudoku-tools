@@ -138,12 +138,12 @@ Standard Sudoku grid size (9x9).
 const SUDOKU_SIZE = 9
 ```
 
-#### `SUDOKU_EMPTY`
+#### `SUDOKU_EMPTY_CELL`
 
 Value representing an empty cell.
 
 ```typescript
-const SUDOKU_EMPTY = 0
+const SUDOKU_EMPTY_CELL = 0
 ```
 
 #### `SUDOKU_BASE_BOARD`
@@ -266,13 +266,13 @@ Removes cells from the board until reaching the desired number of hints. Modifie
 **Example:**
 
 ```typescript
-import { removeCells, cloneBoard, SUDOKU_BASE_BOARD, SUDOKU_EMPTY } from '@hackettyam/sudoku-tools'
+import { removeCells, cloneBoard, SUDOKU_BASE_BOARD, SUDOKU_EMPTY_CELL } from '@hackettyam/sudoku-tools'
 
 const board = cloneBoard(SUDOKU_BASE_BOARD)
 removeCells(board, 30) // Keep only 30 hints
 
 // Count remaining hints
-const hintCount = board.flat().filter(cell => cell !== SUDOKU_EMPTY).length
+const hintCount = board.flat().filter(cell => cell !== SUDOKU_EMPTY_CELL).length
 console.log('Hints remaining:', hintCount) // 30
 ```
 
@@ -351,6 +351,142 @@ swapColWithinStack(board, 2)
 
 ---
 
+#### `isValidSudoku(board)`
+
+Validates if a Sudoku board follows all Sudoku rules.
+
+**Validation checks:**
+- Each row contains digits 1-9 without repetition
+- Each column contains digits 1-9 without repetition
+- Each 3x3 box contains digits 1-9 without repetition
+
+Empty cells (value 0) are ignored during validation.
+
+**Parameters:**
+- `board`: `BoardType` - The Sudoku board to validate.
+
+**Returns:**
+- `boolean` - `true` if the board is valid, `false` otherwise.
+
+**Example:**
+
+```typescript
+import { isValidSudoku, generateSudoku, cloneBoard } from '@hackettyam/sudoku-tools'
+
+const { board, solved } = generateSudoku()
+
+console.log(isValidSudoku(board))  // true
+console.log(isValidSudoku(solved)) // true
+
+// Create an invalid board
+const invalidBoard = cloneBoard(board)
+invalidBoard[0][0] = invalidBoard[0][1] // Duplicate in row
+console.log(isValidSudoku(invalidBoard)) // false
+```
+
+---
+
+#### `countFilledCells(board)`
+
+Counts the number of filled (non-empty) cells in a Sudoku board.
+
+**Parameters:**
+- `board`: `BoardType` - The Sudoku board to count.
+
+**Returns:**
+- `number` - The number of cells that are not empty.
+
+**Example:**
+
+```typescript
+import { countFilledCells, generateSudoku, Difficulty } from '@hackettyam/sudoku-tools'
+
+const { board, solved } = generateSudoku(Difficulty.Normal)
+
+console.log(countFilledCells(solved)) // 81 (complete board)
+console.log(countFilledCells(board))  // 35 (Normal difficulty hints)
+```
+
+---
+
+#### `countEmptyCells(board)`
+
+Counts the number of empty cells in a Sudoku board.
+
+**Parameters:**
+- `board`: `BoardType` - The Sudoku board to count.
+
+**Returns:**
+- `number` - The number of cells that are empty (value === 0).
+
+**Example:**
+
+```typescript
+import { countEmptyCells, generateSudoku, Difficulty } from '@hackettyam/sudoku-tools'
+
+const { board } = generateSudoku(Difficulty.Normal)
+
+console.log(countEmptyCells(board)) // 46 (81 - 35 hints)
+```
+
+---
+
+#### `countValidCells(board, solved)`
+
+Counts the number of valid (correct) cells in a Sudoku board by comparing against the solution.
+
+**Parameters:**
+- `board`: `BoardType` - The current Sudoku board state.
+- `solved`: `BoardType` - The solved Sudoku board to compare against.
+
+**Returns:**
+- `number` - The number of cells that match the solution (empty cells not counted).
+
+**Example:**
+
+```typescript
+import { countValidCells, generateSudoku, cloneBoard } from '@hackettyam/sudoku-tools'
+
+const { board, solved } = generateSudoku()
+
+// All pre-filled cells are valid
+console.log(countValidCells(board, solved)) // 35 (for Normal difficulty)
+
+// Player fills a correct cell
+const playerBoard = cloneBoard(board)
+playerBoard[0][0] = solved[0][0]
+console.log(countValidCells(playerBoard, solved)) // 36
+```
+
+---
+
+#### `countInvalidCells(board, solved)`
+
+Counts the number of invalid (incorrect) cells in a Sudoku board by comparing against the solution.
+
+**Parameters:**
+- `board`: `BoardType` - The current Sudoku board state.
+- `solved`: `BoardType` - The solved Sudoku board to compare against.
+
+**Returns:**
+- `number` - The number of cells that don't match the solution (empty cells not counted).
+
+**Example:**
+
+```typescript
+import { countInvalidCells, generateSudoku, cloneBoard } from '@hackettyam/sudoku-tools'
+
+const { board, solved } = generateSudoku()
+const playerBoard = cloneBoard(board)
+
+// Player fills a wrong value
+playerBoard[0][0] = solved[0][0] === 1 ? 2 : 1
+
+console.log(countInvalidCells(playerBoard, solved)) // 1
+```
+
+---
+
 ## Advanced Examples
 
 ### Creating a Custom Puzzle Generator
@@ -385,11 +521,11 @@ const { puzzle, solution } = createCustomPuzzle(25)
 ### Validating User Input
 
 ```typescript
-import { SUDOKU_SIZE, SUDOKU_EMPTY, type BoardType } from '@hackettyam/sudoku-tools'
+import { SUDOKU_SIZE, SUDOKU_EMPTY_CELL, type BoardType } from '@hackettyam/sudoku-tools'
 
 function isValidMove(board: BoardType, row: number, col: number, value: number): boolean {
   // Check if cell is empty
-  if (board[row][col] !== SUDOKU_EMPTY) {
+  if (board[row][col] !== SUDOKU_EMPTY_CELL) {
     return false
   }
 
@@ -422,7 +558,7 @@ function isValidMove(board: BoardType, row: number, col: number, value: number):
 import {
   generateSudoku,
   SUDOKU_SIZE,
-  SUDOKU_EMPTY,
+  SUDOKU_EMPTY_CELL,
   type BoardReadOnlyType,
 } from '@hackettyam/sudoku-tools'
 
@@ -433,7 +569,7 @@ function createReadOnlyMap(board: number[][]): BoardReadOnlyType {
     readOnly[r] = []
     for (let c = 0; c < SUDOKU_SIZE; c++) {
       // Cells with values are read-only (pre-filled hints)
-      readOnly[r][c] = board[r][c] !== SUDOKU_EMPTY
+      readOnly[r][c] = board[r][c] !== SUDOKU_EMPTY_CELL
     }
   }
 
@@ -447,24 +583,35 @@ const readOnlyMap = createReadOnlyMap(board)
 const canEdit = (row: number, col: number) => !readOnlyMap[row][col]
 ```
 
-### Counting Empty Cells
+### Tracking Game Progress
 
 ```typescript
-import { SUDOKU_EMPTY, type BoardType } from '@hackettyam/sudoku-tools'
+import {
+  countFilledCells,
+  countEmptyCells,
+  countValidCells,
+  countInvalidCells,
+  generateSudoku,
+  type BoardType,
+} from '@hackettyam/sudoku-tools'
 
-function countEmptyCells(board: BoardType): number {
-  return board.flat().filter(cell => cell === SUDOKU_EMPTY).length
-}
-
-function countFilledCells(board: BoardType): number {
-  return board.flat().filter(cell => cell !== SUDOKU_EMPTY).length
-}
-
-function getProgress(board: BoardType): number {
-  const total = 81
+function getGameStats(board: BoardType, solved: BoardType) {
   const filled = countFilledCells(board)
-  return Math.round((filled / total) * 100)
+  const empty = countEmptyCells(board)
+  const valid = countValidCells(board, solved)
+  const invalid = countInvalidCells(board, solved)
+  const progress = Math.round((filled / 81) * 100)
+
+  return { filled, empty, valid, invalid, progress }
 }
+
+const { board, solved } = generateSudoku()
+const stats = getGameStats(board, solved)
+
+console.log(`Progress: ${stats.progress}%`)
+console.log(`Valid cells: ${stats.valid}`)
+console.log(`Invalid cells: ${stats.invalid}`)
+console.log(`Remaining: ${stats.empty}`)
 ```
 
 ---
