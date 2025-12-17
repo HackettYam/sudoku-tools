@@ -1,3 +1,5 @@
 export type { BoardType, BoardCellType, BoardReadOnlyType } from './board.model'
+export type { CellValue } from './cell.model'
 export { Difficulty, DifficultyHints, type DifficultyType } from './difficulty.model'
+export type { GameState } from './gameState.model'
 export type { GeneratePuzzleResult } from './puzzle.model'
