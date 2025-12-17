@@ -8,6 +8,8 @@ import type { BoardType } from '../models/board.model'
  * - Permutes digits randomly
  * - Permutes rows within 3x3 bands
  * - Permutes columns within 3x3 stacks
+ *
+ * @param board - The Sudoku board to randomize
  */
 export function randomizeBoard(board: BoardType): void {
   // Permute digits (swap between pairs randomly)

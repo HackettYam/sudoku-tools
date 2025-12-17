@@ -2,10 +2,13 @@ import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '../constants/sudoku.constants'
 import type { BoardType } from '../models/board.model'
 
 /**
- * Removes cells from the board until reaching the desired number of hints.
+ * Empties cells from the board until reaching the desired number of hints.
  * Leaves the number of hints according to the difficulty.
+ *
+ * @param board - The Sudoku board to empty cells from
+ * @param hints - The number of hints to leave on the board
  */
-export function removeCells(board: BoardType, hints: number): void {
+export function emptyCells(board: BoardType, hints: number): void {
   let cellsToRemove = (SUDOKU_SIZE * SUDOKU_SIZE) - hints
   const cells: [number, number][] = []
 

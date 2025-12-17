@@ -39,6 +39,7 @@ module.exports = {
       2,
       'always',
       [
+        'core', // Core manipulation
         'board', // Board manipulation
         'generator', // Puzzle generation
         'solver', // Puzzle solving

@@ -2,6 +2,9 @@ import type { BoardType } from '../models/board.model'
 
 /**
  * Swaps two random rows within the same 3x3 band
+ *
+ * @param board - The Sudoku board to swap rows within a band
+ * @param band - The band index (0-2)
  */
 export function swapRowWithinBand(board: BoardType, band: number): void {
   const start = band * 3

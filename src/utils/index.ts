@@ -1,13 +1,15 @@
 export { cloneBoard } from './cloneBoard'
-export {
-  countEmptyCells,
-  countFilledCells,
-  countInvalidCells,
-  countValidCells,
-} from './countCells'
-export { isValidSudoku } from './isValidSudoku'
+export { countEmptyCells } from './countEmptyCells'
+export { countFilledCells } from './countFilledCells'
+export { countInvalidCells } from './countInvalidCells'
+export { countValidCells } from './countValidCells'
+export { emptyCells } from './emptyCells'
+export { generatePuzzle } from './generatePuzzle'
+export { isValidBox } from './isValidBox'
+export { isValidColumn } from './isValidColumn'
+export { isValidPuzzle } from './isValidPuzzle'
+export { isValidRow } from './isValidRow'
+export { randomizeBoard } from './randomizeBoard'
+export { swapColWithinStack } from './swapColWithinStack'
 export { swapDigits } from './swapDigits'
 export { swapRowWithinBand } from './swapRowWithinBand'
-export { swapColWithinStack } from './swapColWithinStack'
-export { randomizeBoard } from './randomizeBoard'
-export { removeCells } from './removeCells'

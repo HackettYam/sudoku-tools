@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest'
 
-import { countFilledCells, isValidSudoku } from '@/utils'
+import { SUDOKU_DIFFICULTY_HINTS, SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '@/constants'
+import { Difficulty, DifficultyHints } from '@/models'
+import { countFilledCells, isValidPuzzle } from '@/utils'
 
-import { generateSudoku } from './generateSudoku'
-import { SUDOKU_DIFFICULTY_HINTS, SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '../constants/sudoku.constants'
-import { Difficulty, DifficultyHints } from '../models/difficulty.model'
+import { createSudoku } from './createSudoku'
 
-describe('generateSudoku', () => {
+describe('createSudoku', () => {
   it('should return board and solved properties', () => {
-    const result = generateSudoku()
+    const result = createSudoku()
 
     expect(result).toHaveProperty('board')
     expect(result).toHaveProperty('solved')
@@ -17,20 +17,20 @@ describe('generateSudoku', () => {
   })
 
   it('should generate a valid solved board', () => {
-    const { solved } = generateSudoku()
+    const { solved } = createSudoku()
 
-    expect(isValidSudoku(solved)).toBe(true)
+    expect(isValidPuzzle(solved)).toBe(true)
     expect(countFilledCells(solved)).toBe(SUDOKU_SIZE * SUDOKU_SIZE)
   })
 
   it('should generate a valid puzzle board', () => {
-    const { board } = generateSudoku()
+    const { board } = createSudoku()
 
-    expect(isValidSudoku(board)).toBe(true)
+    expect(isValidPuzzle(board)).toBe(true)
   })
 
   it('should use Normal difficulty by default', () => {
-    const { board } = generateSudoku()
+    const { board } = createSudoku()
     const filledCells = countFilledCells(board)
 
     expect(filledCells).toBe(DifficultyHints.Normal)
@@ -43,15 +43,15 @@ describe('generateSudoku', () => {
     [Difficulty.Hard, DifficultyHints.Hard],
     [Difficulty.Expert, DifficultyHints.Expert],
   ])('should generate puzzle with correct hints for %s difficulty', (difficulty, expectedHints) => {
-    const { board } = generateSudoku(difficulty)
+    const { board } = createSudoku(difficulty)
     const filledCells = countFilledCells(board)
 
     expect(filledCells).toBe(expectedHints)
   })
 
   it('should generate different boards on multiple calls', () => {
-    const result1 = generateSudoku()
-    const result2 = generateSudoku()
+    const result1 = createSudoku()
+    const result2 = createSudoku()
 
     const boardsAreDifferent = JSON.stringify(result1.board) !== JSON.stringify(result2.board)
       || JSON.stringify(result1.solved) !== JSON.stringify(result2.solved)
@@ -60,7 +60,7 @@ describe('generateSudoku', () => {
   })
 
   it('should ensure puzzle cells match solved board', () => {
-    const { board, solved } = generateSudoku()
+    const { board, solved } = createSudoku()
 
     for (let r = 0; r < SUDOKU_SIZE; r++) {
       for (let c = 0; c < SUDOKU_SIZE; c++) {
@@ -74,7 +74,7 @@ describe('generateSudoku', () => {
   it('should use SUDOKU_DIFFICULTY_HINTS mapping correctly', () => {
     for (const difficulty of Object.values(Difficulty)) {
       const expectedHints = SUDOKU_DIFFICULTY_HINTS[difficulty]
-      const { board } = generateSudoku(difficulty)
+      const { board } = createSudoku(difficulty)
       const filledCells = countFilledCells(board)
 
       expect(filledCells).toBe(expectedHints)

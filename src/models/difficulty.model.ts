@@ -2,10 +2,19 @@
  * Difficulty levels for Sudoku puzzles
  */
 export enum Difficulty {
+  /** Novice difficulty level */
   Novice = 'novice',
+
+  /** Easy difficulty level */
   Easy = 'easy',
+
+  /** Normal difficulty level */
   Normal = 'normal',
+
+  /** Hard difficulty level */
   Hard = 'hard',
+
+  /** Expert difficulty level */
   Expert = 'expert',
 }
 
@@ -13,10 +22,19 @@ export enum Difficulty {
  * Number of hints (filled cells) for each difficulty level
  */
 export enum DifficultyHints {
+  /** Novice difficulty hints */
   Novice = 50,
+
+  /** Easy difficulty hints */
   Easy = 40,
+
+  /** Normal difficulty hints */
   Normal = 35,
+
+  /** Hard difficulty hints */
   Hard = 30,
+
+  /** Expert difficulty hints */
   Expert = 20,
 }
 

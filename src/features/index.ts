@@ -1,1 +1,1 @@
-export { generateSudoku, type GenerateSudokuResult } from './generateSudoku'
+export { createSudoku } from './createSudoku'

@@ -1,5 +1,11 @@
-// coverage
+# coverage
 coverage
 
-// node_modules
+# node_modules
 node_modules
+
+# TypeScript build output
+dist/
+*.d.ts
+*.js
+*.map

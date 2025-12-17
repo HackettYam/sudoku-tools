@@ -7,7 +7,10 @@ export type BoardType = number[][]
  * Represents a cell position on the board
  */
 export interface BoardCellType {
+  /** Column index */
   col: number
+
+  /** Row index */
   row: number
 }
 

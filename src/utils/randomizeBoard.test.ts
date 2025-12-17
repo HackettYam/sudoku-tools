@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from 'vitest'
 
 import { SUDOKU_BASE_BOARD, SUDOKU_SIZE } from '@/constants'
-import { isValidSudoku } from '@/utils'
 
 import { cloneBoard } from './cloneBoard'
+import { isValidPuzzle } from './isValidPuzzle'
 import { randomizeBoard } from './randomizeBoard'
 
 describe('randomizeBoard', () => {
@@ -22,7 +22,7 @@ describe('randomizeBoard', () => {
 
     randomizeBoard(board)
 
-    expect(isValidSudoku(board)).toBe(true)
+    expect(isValidPuzzle(board)).toBe(true)
   })
 
   it('should preserve all digits 1-9 in each row', () => {

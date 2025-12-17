@@ -3,6 +3,9 @@ import type { BoardType } from '../models/board.model'
 
 /**
  * Swaps two random columns within the same 3x3 stack
+ *
+ * @param board - The Sudoku board to swap columns within a stack
+ * @param stack - The stack index (0-2)
  */
 export function swapColWithinStack(board: BoardType, stack: number): void {
   const start = stack * 3

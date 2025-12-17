@@ -1,7 +1,3 @@
-// Models
-export type { BoardType, BoardCellType, BoardReadOnlyType } from './models'
-export { Difficulty, DifficultyHints, type DifficultyType } from './models'
-
 // Constants
 export {
   SUDOKU_SIZE,
@@ -10,15 +6,35 @@ export {
   SUDOKU_DIFFICULTY_HINTS,
 } from './constants'
 
+// Features
+export { createSudoku } from './features'
+
+// Models
+export {
+  type BoardType,
+  type BoardCellType,
+  type BoardReadOnlyType,
+  Difficulty,
+  DifficultyHints,
+  type DifficultyType,
+  type GeneratePuzzleResult,
+} from './models'
+
 // Utils
 export {
   cloneBoard,
+  countEmptyCells,
+  countFilledCells,
+  countInvalidCells,
+  countValidCells,
+  emptyCells,
+  generatePuzzle,
+  isValidBox,
+  isValidColumn,
+  isValidPuzzle,
+  isValidRow,
+  randomizeBoard,
+  swapColWithinStack,
   swapDigits,
   swapRowWithinBand,
-  swapColWithinStack,
-  randomizeBoard,
-  removeCells,
 } from './utils'
-
-// Features
-export { generateSudoku, type GenerateSudokuResult } from './features'
