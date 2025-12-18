@@ -1,3 +1,5 @@
+/* eslint-disable max-lines-per-function */
+
 import { describe, expect, it } from 'vitest'
 
 import { SUDOKU_BASE_BOARD, SUDOKU_EMPTY_CELL } from '@/constants'
@@ -102,5 +104,205 @@ describe('solvePuzzle', () => {
     if (solution) {
       expect(isValidPuzzle(solution)).toBe(true)
     }
+  })
+
+  it('should return null for board with invalid size', () => {
+    const board = [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+    ]
+
+    const solution = solvePuzzle(board)
+
+    expect(solution).toBeNull()
+  })
+
+  it('should handle board with values out of range (keeps invalid values)', () => {
+    const board = cloneBoard(SUDOKU_BASE_BOARD)
+    board[0][0] = 10
+
+    const solution = solvePuzzle(board)
+
+    // isValidPuzzle doesn't validate value range, so it passes through
+    expect(solution).not.toBeNull()
+
+    if (solution) {
+      expect(solution[0][0]).toBe(10)
+    }
+  })
+
+  it('should handle board with negative values (keeps invalid values)', () => {
+    const board = cloneBoard(SUDOKU_BASE_BOARD)
+    board[0][0] = -1
+
+    const solution = solvePuzzle(board)
+
+    // isValidPuzzle doesn't validate value range, so it passes through
+    expect(solution).not.toBeNull()
+
+    if (solution) {
+      expect(solution[0][0]).toBe(-1)
+    }
+  })
+
+  it('should solve a completely empty board', () => {
+    const createEmptyRow = (): number[] => Array.from({ length: 9 }, () => SUDOKU_EMPTY_CELL)
+    const board: number[][] = Array.from({ length: 9 }, createEmptyRow)
+
+    const solution = solvePuzzle(board)
+
+    expect(solution).not.toBeNull()
+
+    if (solution) {
+      expect(isValidPuzzle(solution)).toBe(true)
+      const hasEmptyCells = solution.flat().includes(SUDOKU_EMPTY_CELL)
+      expect(hasEmptyCells).toBe(false)
+    }
+  })
+
+  it('should return null for board with duplicate in row', () => {
+    const board = cloneBoard(SUDOKU_BASE_BOARD)
+    board[0][0] = 5
+    board[0][4] = 5
+
+    const solution = solvePuzzle(board)
+
+    expect(solution).toBeNull()
+  })
+
+  it('should return null for board with duplicate in column', () => {
+    const board = cloneBoard(SUDOKU_BASE_BOARD)
+    board[0][0] = 5
+    board[4][0] = 5
+
+    const solution = solvePuzzle(board)
+
+    expect(solution).toBeNull()
+  })
+
+  it('should return null for board with duplicate in box', () => {
+    const board = cloneBoard(SUDOKU_BASE_BOARD)
+    board[0][0] = 5
+    board[1][1] = 5
+
+    const solution = solvePuzzle(board)
+
+    expect(solution).toBeNull()
+  })
+
+  it('should return null when backtrack fails on unsolvable valid puzzle', () => {
+    /*
+     * This puzzle passes isValidPuzzle (no duplicates) but backtrack fails
+     * Cell [0][0] is empty and all values 1-9 are blocked:
+     * - Row 0 has: 2,3,4,5,6,7,8,9 (blocks all except 1)
+     * - Column 0 has: 1 in box (blocks 1)
+     * - So [0][0] has no valid candidates
+     */
+    const board = [
+      [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+      ],
+      [
+        4,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        7,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        6,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        8,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+    ]
+
+    const solution = solvePuzzle(board)
+
+    expect(solution).toBeNull()
   })
 })

@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { SUDOKU_BASE_BOARD, SUDOKU_EMPTY_CELL } from '@/constants'
-import { Difficulty } from '@/models'
+import { type CellValue, Difficulty } from '@/models'
 import { cloneBoard } from '@/utils'
 
 import { SudokuPuzzle } from '../sudoku.entity'
@@ -242,7 +242,7 @@ describe('SudokuPuzzle', () => {
       const puzzle = createTestPuzzle()
       const [ [correctValue] ] = puzzle.solution
 
-      const isValid = puzzle.isValidMove(0, 0, correctValue)
+      const isValid = puzzle.isValidMove(0, 0, correctValue as CellValue)
 
       expect(isValid).toBe(true)
     })
@@ -267,7 +267,7 @@ describe('SudokuPuzzle', () => {
       const puzzle = createTestPuzzle()
       const [ [,, existingValue] ] = puzzle.current
 
-      const isValid = puzzle.isValidMove(0, 0, existingValue)
+      const isValid = puzzle.isValidMove(0, 0, existingValue as CellValue)
 
       expect(isValid).toBe(false)
     })
