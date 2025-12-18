@@ -49,6 +49,7 @@ module.exports = {
         'types', // Type definitions
         'deps', // Dependencies
         'config', // Configuration related
+        'readme', // Readme docs related
         'ci', // CI/CD related
         'testing', // Test related
         'release', // Release related

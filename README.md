@@ -1,21 +1,41 @@
-# @hackettyam/sudoku-tools
+# 🧩 @hackettyam/sudoku-tools
 
-A lightweight, zero-dependency TypeScript library for Sudoku puzzle generation, manipulation, and utilities. This library provides pure logic functions without any UI or framework dependencies, making it suitable for any JavaScript/TypeScript project.
+> A lightweight, zero-dependency TypeScript library for Sudoku puzzle generation, manipulation, and utilities. This library provides pure logic functions without any UI or framework dependencies, making it suitable for any JavaScript/TypeScript project.
 
-## Features
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+[![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)]()
 
-- **Pure TypeScript** - Full type safety with comprehensive type definitions
-- **Zero Dependencies** - No external runtime dependencies
-- **Framework Agnostic** - Works with any JavaScript framework or vanilla JS
-- **Modular Design** - Import only what you need
-- **Well Documented** - JSDoc comments on all exports
+## ✨ Features
 
-## Installation
+- 🔷 **Pure TypeScript** - Full type safety with comprehensive type definitions
+- 📦 **Zero Dependencies** - No external runtime dependencies
+- 🎯 **Framework Agnostic** - Works with any JavaScript framework or vanilla JS
+- 🧱 **Modular Design** - Import only what you need
+- ✅ **100% Test Coverage** - Thoroughly tested and reliable
 
-This is a local library. Add it to your project's path aliases:
+## 📦 Installation
 
-```typescript
-// tsconfig.json
+### 📥 Package Manager
+
+Install using your preferred package manager:
+
+```bash
+# npm
+npm install @hackettyam/sudoku-tools
+
+# yarn
+yarn add @hackettyam/sudoku-tools
+
+# pnpm
+pnpm add @hackettyam/sudoku-tools
+```
+
+### 🔗 Path Alias (Monorepo)
+
+If using as a local package in a monorepo, add the path alias to your `tsconfig.json`:
+
+```json
 {
   "compilerOptions": {
     "paths": {
@@ -25,1519 +45,132 @@ This is a local library. Add it to your project's path aliases:
 }
 ```
 
-## Quick Start
+## 🚀 Quick Start
+
+Create your first Sudoku puzzle in seconds:
 
 ```typescript
 import { createSudoku, Difficulty } from '@hackettyam/sudoku-tools'
 
-// Create a Sudoku puzzle
+// 1️⃣ Create a puzzle
 const puzzle = createSudoku(Difficulty.Normal)
 
-// Access the boards
-console.log('Current:', puzzle.current)   // Player's progress
-console.log('Solution:', puzzle.solution) // Complete solution
-console.log('Difficulty:', puzzle.difficulty)
+// 2️⃣ Play the game
+puzzle.setCell(0, 0, 5)           // ✏️ Set a cell value
+const hint = puzzle.getHint()     // 💡 Get help when stuck
+puzzle.getCandidates(0, 0)        // 📋 See valid options
 
-// Play the game
-const hint = puzzle.getHint()
-if (hint) {
-  puzzle.setCell(hint.row, hint.col, hint.value)
-}
-
-// Check progress
-console.log('Solved:', puzzle.isSolved())
-console.log('Progress:', puzzle.getProgress())
+// 3️⃣ Track progress
+console.log(puzzle.getProgress()) // 📊 { progress: 45, validCells: 35, ... }
+console.log(puzzle.isSolved())    // 🏆 Check if solved!
 ```
 
-> **Note:** The puzzle is randomized on each generation, so actual values will differ. Cells with `0` represent empty cells that the player needs to fill.
+## 📖 Documentation
 
-## API Reference
+Explore the complete documentation in [`docs/`](./docs/README.md):
 
-### Models
+| Section | Description |
+|---------|-------------|
+| 🚀 [**Getting Started**](./docs/getting-started.md) | Installation, setup, and first puzzle |
+| 🧩 [**SudokuPuzzle**](./docs/api/sudoku-puzzle.md) | Main puzzle class - play, hint, validate |
+| 🛠️ [**Utilities**](./docs/api/utilities.md) | Helper functions for everything else |
+| 📦 [**Models & Types**](./docs/api/models.md) | TypeScript types and interfaces |
+| 🔢 [**Constants**](./docs/api/constants.md) | Grid and difficulty constants |
+| 💡 [**Examples**](./docs/guides/examples.md) | Real-world usage patterns |
+| 🔄 [**Transformations**](./docs/guides/transformations.md) | Rotate, mirror, shuffle boards |
+| ✅ [**Validation**](./docs/guides/validation.md) | Check moves and board states |
 
-#### `BoardType`
+## 🎮 API Overview
 
-Represents a Sudoku board as a 2D array of numbers.
-
-```typescript
-type BoardType = number[][]
-```
-
-#### `BoardCellType`
-
-Represents a cell position on the board.
-
-```typescript
-interface BoardCellType {
-  col: number
-  row: number
-}
-```
-
-#### `BoardReadOnlyType`
-
-Represents a read-only cell map for the board (used to track which cells are pre-filled).
-
-```typescript
-type BoardReadOnlyType = boolean[][]
-```
-
-#### `CellValue`
-
-Type-safe representation of valid Sudoku cell values.
-
-```typescript
-type CellValue = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-```
-
-#### `SetCellOptions`
-
-Options for the `setCellValue` function.
-
-```typescript
-interface SetCellOptions {
-  col: number    // Column index (0-8)
-  row: number    // Row index (0-8)
-  value: number  // Value to set (0-9)
-}
-```
-
-#### `SudokuState`
-
-Represents the complete state of a Sudoku game.
-
-```typescript
-interface SudokuState {
-  current: BoardType        // Player's progress
-  difficulty: DifficultyType
-  puzzle: BoardType         // Original puzzle
-  readOnly: BoardReadOnlyType
-  solution: BoardType       // Solved version
-}
-```
-
-#### `Difficulty`
-
-Enum representing difficulty levels.
-
-```typescript
-enum Difficulty {
-  Novice = 'novice',   // 50 hints
-  Easy = 'easy',       // 40 hints
-  Normal = 'normal',   // 35 hints
-  Hard = 'hard',       // 30 hints
-  Expert = 'expert',   // 20 hints
-}
-```
-
-#### `DifficultyHints`
-
-Enum representing the number of hints for each difficulty level.
-
-```typescript
-enum DifficultyHints {
-  Novice = 50,
-  Easy = 40,
-  Normal = 35,
-  Hard = 30,
-  Expert = 20,
-}
-```
-
-#### `DifficultyResult`
-
-Result of difficulty analysis returned by `getDifficulty`.
-
-```typescript
-interface DifficultyResult {
-  avgCandidates: number   // Average candidates per empty cell
-  difficulty: DifficultyType
-  emptyCells: number      // Number of empty cells
-  minCandidates: number   // Minimum candidates found
-  score: number           // Numeric difficulty score
-}
-```
-
-#### `HintResult`
-
-Result type for `getHint` function.
-
-```typescript
-interface HintResult {
-  col: number    // Column index
-  row: number    // Row index
-  value: number  // Correct value for the cell
-}
-```
-
-#### `MirrorDirection`
-
-Direction options for `mirrorBoard` function.
-
-```typescript
-type MirrorDirection = 'horizontal' | 'vertical'
-```
-
----
-
-### Constants
-
-#### `SUDOKU_SIZE`
-
-Standard Sudoku grid size (9x9).
-
-```typescript
-const SUDOKU_SIZE = 9
-```
-
-#### `SUDOKU_EMPTY_CELL`
-
-Value representing an empty cell.
-
-```typescript
-const SUDOKU_EMPTY_CELL = 0
-```
-
-#### `SUDOKU_BASE_BOARD`
-
-A valid solved Sudoku board used as the base for generation.
-
-```typescript
-const SUDOKU_BASE_BOARD: number[][] = [
-  [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [4, 5, 6, 7, 8, 9, 1, 2, 3],
-  // ... (9x9 valid Sudoku)
-]
-```
-
-#### `SUDOKU_DIFFICULTY_HINTS`
-
-Mapping of difficulty levels to number of hints.
-
-```typescript
-const SUDOKU_DIFFICULTY_HINTS: Record<Difficulty, DifficultyHints>
-```
-
----
-
-### Features
-
-#### `createSudoku(difficulty?)`
-
-Creates a Sudoku puzzle and returns a `SudokuPuzzle` instance with all methods needed to play.
-
-**Parameters:**
-
-- `difficulty` (optional): `Difficulty` - The difficulty level. Defaults to `Difficulty.Normal`.
-
-**Returns:**
-
-- `SudokuPuzzle` - A puzzle instance with properties and methods (see SudokuPuzzle section below).
-
-**Example:**
+### 🧩 Creating Puzzles
 
 ```typescript
 import { createSudoku, Difficulty } from '@hackettyam/sudoku-tools'
 
-// Create with default difficulty (Normal)
-const puzzle1 = createSudoku()
-
-// Create an easy puzzle
-const puzzle2 = createSudoku(Difficulty.Easy)
-
-// Create an expert puzzle
-const puzzle3 = createSudoku(Difficulty.Expert)
-
-console.log('Easy puzzle progress:', puzzle2.getProgress()) // { filledCells: 40, ... }
-console.log('Expert puzzle progress:', puzzle3.getProgress()) // { filledCells: 20, ... }
+const puzzle = createSudoku(Difficulty.Hard)
 ```
 
----
-
-### SudokuPuzzle
-
-The `SudokuPuzzle` class represents a Sudoku puzzle instance with all necessary methods to play.
-
-#### Properties
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `current` | `BoardType` | Current state of the board (player's progress) |
-| `original` | `BoardType` | The original puzzle board |
-| `solution` | `BoardType` | The complete solution |
-| `readOnly` | `BoardReadOnlyType` | Mask indicating which cells are pre-filled |
-| `difficulty` | `DifficultyType` | The difficulty level |
-
-#### Methods
-
-##### `setCell(row, col, value)`
-
-Sets a value in a cell. Only works if the cell is not read-only.
-
-**Parameters:**
-
-- `row`: `number` - Row index (0-8)
-- `col`: `number` - Column index (0-8)
-- `value`: `CellValue` - Value to set (0-9)
-
-**Returns:** `boolean` - `true` if cell was set, `false` if read-only.
-
-```typescript
-puzzle.setCell(0, 0, 5) // Set cell at row 0, col 0 to 5
-```
-
----
-
-##### `clearCell(row, col)`
-
-Clears a cell (sets it to empty). Only works if the cell is not read-only.
-
-**Parameters:**
-
-- `row`: `number` - Row index (0-8)
-- `col`: `number` - Column index (0-8)
-
-**Returns:** `boolean` - `true` if cell was cleared, `false` if read-only.
-
-```typescript
-puzzle.clearCell(0, 0) // Clear cell at row 0, col 0
-```
-
----
-
-##### `getCandidates(row, col)`
-
-Gets all valid candidate values for a specific cell.
-
-**Parameters:**
-
-- `row`: `number` - Row index (0-8)
-- `col`: `number` - Column index (0-8)
-
-**Returns:** `number[]` - Array of valid values (1-9) for the cell.
-
-```typescript
-const candidates = puzzle.getCandidates(0, 0)
-console.log('Possible values:', candidates) // [1, 3, 7]
-```
-
----
-
-##### `getHint()`
-
-Gets a hint (next empty cell with its correct value).
-
-**Returns:** `HintResult | null` - Object with `row`, `col`, `value` or `null` if no empty cells.
-
-```typescript
-const hint = puzzle.getHint()
-if (hint) {
-  console.log(`Place ${hint.value} at row ${hint.row}, col ${hint.col}`)
-  puzzle.setCell(hint.row, hint.col, hint.value)
-}
-```
-
----
-
-##### `getProgress()`
-
-Gets progress statistics for the puzzle.
-
-**Returns:** `SudokuPuzzleStatistics` - Object with:
-
-- `emptyCells`: Number of empty cells
-- `filledCells`: Number of filled cells
-- `validCells`: Number of correctly filled cells
-- `invalidCells`: Number of incorrectly filled cells
-- `progress`: Progress percentage (0-100)
-
-```typescript
-const stats = puzzle.getProgress()
-console.log(`Progress: ${stats.progress}%`)
-console.log(`Valid: ${stats.validCells}, Invalid: ${stats.invalidCells}`)
-```
-
----
-
-##### `isComplete()`
-
-Checks if the puzzle is complete (all cells filled and valid).
-
-**Returns:** `boolean` - `true` if complete and valid.
-
-```typescript
-if (puzzle.isComplete()) {
-  console.log('Congratulations!')
-}
-```
-
----
-
-##### `isValidMove(row, col, value)`
-
-Checks if a move is valid (doesn't violate Sudoku rules).
-
-**Parameters:**
-
-- `row`: `number` - Row index (0-8)
-- `col`: `number` - Column index (0-8)
-- `value`: `CellValue` - Value to check
-
-**Returns:** `boolean` - `true` if the move is valid.
-
-```typescript
-if (puzzle.isValidMove(0, 0, 5)) {
-  puzzle.setCell(0, 0, 5)
-} else {
-  console.log('Invalid move!')
-}
-```
-
----
-
-##### `isSolved()`
-
-Checks if the puzzle is solved correctly (current matches solution).
-
-**Returns:** `boolean` - `true` if solved.
-
-```typescript
-if (puzzle.isSolved()) {
-  console.log('You solved it!')
-}
-```
-
----
-
-##### `reset(withRandomize?)`
-
-Resets the puzzle to its original state.
-
-**Parameters:**
-
-- `withRandomize` (optional): `boolean` - If `true`, randomizes the board after reset.
-
-```typescript
-puzzle.reset() // Reset to original state
-puzzle.reset(true) // Reset and randomize
-```
-
----
-
-### Utilities
-
-#### `cloneBoard(board)`
-
-Creates a deep copy of a Sudoku board.
-
-**Parameters:**
-- `board`: `BoardType` - The board to clone.
-
-**Returns:**
-- `BoardType` - A new board with copied values.
-
-**Example:**
-
-```typescript
-import { cloneBoard, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku()
-const boardCopy = cloneBoard(board)
-
-// Modify the copy without affecting the original
-boardCopy[0][0] = 5
-console.log(board[0][0] !== boardCopy[0][0]) // true
-```
-
----
-
-#### `randomizeBoard(board)`
-
-Applies transformations to a Sudoku board to obtain randomness. Modifies the board in place.
-
-**Transformations applied:**
-- Permutes digits randomly
-- Permutes rows within 3x3 bands
-- Permutes columns within 3x3 stacks
-
-**Parameters:**
-- `board`: `BoardType` - The board to randomize (modified in place).
-
-**Example:**
-
-```typescript
-import { randomizeBoard, cloneBoard, SUDOKU_BASE_BOARD } from '@hackettyam/sudoku-tools'
-
-const board = cloneBoard(SUDOKU_BASE_BOARD)
-randomizeBoard(board)
-
-// Board is now randomized but still valid
-console.log('Randomized board:', board)
-```
-
----
-
-#### `emptyCells(board, hints)`
-
-Empties cells from the board until reaching the desired number of hints. Modifies the board in place.
-
-**Parameters:**
-
-- `board`: `BoardType` - The board to modify.
-- `hints`: `number` - The number of cells to keep filled.
-
-**Example:**
-
-```typescript
-import { emptyCells, cloneBoard, SUDOKU_BASE_BOARD, countFilledCells } from '@hackettyam/sudoku-tools'
-
-const board = cloneBoard(SUDOKU_BASE_BOARD)
-emptyCells(board, 30) // Keep only 30 hints
-
-console.log('Hints remaining:', countFilledCells(board)) // 30
-```
-
----
-
-#### `swapDigits(board, d1, d2)`
-
-Swaps all occurrences of two digits in the board. Modifies the board in place.
-
-**Parameters:**
-- `board`: `BoardType` - The board to modify.
-- `d1`: `number` - First digit (1-9).
-- `d2`: `number` - Second digit (1-9).
-
-**Example:**
-
-```typescript
-import { swapDigits, cloneBoard, SUDOKU_BASE_BOARD } from '@hackettyam/sudoku-tools'
-
-const board = cloneBoard(SUDOKU_BASE_BOARD)
-
-// Swap all 1s with 9s
-swapDigits(board, 1, 9)
-
-// Now every cell that was 1 is 9 and vice versa
-console.log(board[0][0]) // 9 (was 1)
-```
-
----
-
-#### `swapRowWithinBand(board, band)`
-
-Swaps two random rows within the same 3x3 band. Modifies the board in place.
-
-**Parameters:**
-- `board`: `BoardType` - The board to modify.
-- `band`: `number` - The band index (0, 1, or 2).
-
-**Example:**
-
-```typescript
-import { swapRowWithinBand, cloneBoard, SUDOKU_BASE_BOARD } from '@hackettyam/sudoku-tools'
-
-const board = cloneBoard(SUDOKU_BASE_BOARD)
-
-// Swap rows in the first band (rows 0-2)
-swapRowWithinBand(board, 0)
-
-// Swap rows in the second band (rows 3-5)
-swapRowWithinBand(board, 1)
-```
-
----
-
-#### `swapColWithinStack(board, stack)`
-
-Swaps two random columns within the same 3x3 stack. Modifies the board in place.
-
-**Parameters:**
-- `board`: `BoardType` - The board to modify.
-- `stack`: `number` - The stack index (0, 1, or 2).
-
-**Example:**
-
-```typescript
-import { swapColWithinStack, cloneBoard, SUDOKU_BASE_BOARD } from '@hackettyam/sudoku-tools'
-
-const board = cloneBoard(SUDOKU_BASE_BOARD)
-
-// Swap columns in the first stack (columns 0-2)
-swapColWithinStack(board, 0)
-
-// Swap columns in the last stack (columns 6-8)
-swapColWithinStack(board, 2)
-```
-
----
-
-#### `isValidPuzzle(board)`
-
-Validates if a Sudoku board follows all Sudoku rules.
-
-**Validation checks:**
-
-- Each row contains digits 1-9 without repetition
-- Each column contains digits 1-9 without repetition
-- Each 3x3 box contains digits 1-9 without repetition
-
-Empty cells (value 0) are ignored during validation.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku board to validate.
-
-**Returns:**
-
-- `boolean` - `true` if the board is valid, `false` otherwise.
-
-**Example:**
-
-```typescript
-import { isValidPuzzle, createSudoku, cloneBoard } from '@hackettyam/sudoku-tools'
-
-const { board, solved } = createSudoku()
-
-console.log(isValidPuzzle(board))  // true
-console.log(isValidPuzzle(solved)) // true
-
-// Create an invalid board
-const invalidBoard = cloneBoard(board)
-invalidBoard[0][0] = 5 // Duplicate value
-console.log(isValidPuzzle(invalidBoard)) // false
-```
-
----
-
-#### `isValidRow(board, row)`
-
-Validates if a specific row in a Sudoku board contains digits 1-9 without repetition.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku board to validate.
-- `row`: `number` - The row index (0-8) to validate.
-
-**Returns:**
-
-- `boolean` - `true` if the row is valid, `false` otherwise.
-
-**Example:**
-
-```typescript
-import { isValidRow, cloneBoard, SUDOKU_BASE_BOARD } from '@hackettyam/sudoku-tools'
-
-const board = cloneBoard(SUDOKU_BASE_BOARD)
-
-console.log(isValidRow(board, 0)) // true
-
-board[0][0] = board[0][1] // Create duplicate
-console.log(isValidRow(board, 0)) // false
-```
-
----
-
-#### `isValidColumn(board, col)`
-
-Validates if a specific column in a Sudoku board contains digits 1-9 without repetition.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku board to validate.
-- `col`: `number` - The column index (0-8) to validate.
-
-**Returns:**
-
-- `boolean` - `true` if the column is valid, `false` otherwise.
-
-**Example:**
-
-```typescript
-import { isValidColumn, cloneBoard, SUDOKU_BASE_BOARD } from '@hackettyam/sudoku-tools'
-
-const board = cloneBoard(SUDOKU_BASE_BOARD)
-
-console.log(isValidColumn(board, 0)) // true
-
-board[0][0] = board[1][0] // Create duplicate
-console.log(isValidColumn(board, 0)) // false
-```
-
----
-
-#### `isValidBox(board, boxRow, boxCol)`
-
-Validates if a specific 3x3 box in a Sudoku board contains digits 1-9 without repetition.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku board to validate.
-- `boxRow`: `number` - The box row index (0, 1, or 2).
-- `boxCol`: `number` - The box column index (0, 1, or 2).
-
-**Returns:**
-
-- `boolean` - `true` if the box is valid, `false` otherwise.
-
-**Example:**
-
-```typescript
-import { isValidBox, cloneBoard, SUDOKU_BASE_BOARD } from '@hackettyam/sudoku-tools'
-
-const board = cloneBoard(SUDOKU_BASE_BOARD)
-
-console.log(isValidBox(board, 0, 0)) // true (top-left box)
-console.log(isValidBox(board, 1, 1)) // true (center box)
-
-board[0][0] = board[1][1] // Create duplicate in top-left box
-console.log(isValidBox(board, 0, 0)) // false
-```
-
----
-
-#### `generatePuzzle(difficulty?)`
-
-Generates a Sudoku puzzle based on the difficulty level. Lower-level utility used by `createSudoku`.
-
-**Parameters:**
-
-- `difficulty` (optional): `Difficulty` - The difficulty level. Defaults to `Difficulty.Normal`.
-
-**Returns:**
-
-- `GeneratePuzzleResult` - An object containing `board` and `solved`.
-
-**Example:**
-
-```typescript
-import { generatePuzzle, Difficulty } from '@hackettyam/sudoku-tools'
-
-const { board, solved } = generatePuzzle(Difficulty.Hard)
-```
-
----
-
-#### `countFilledCells(board)`
-
-Counts the number of filled (non-empty) cells in a Sudoku board.
-
-**Parameters:**
-- `board`: `BoardType` - The Sudoku board to count.
-
-**Returns:**
-- `number` - The number of cells that are not empty.
-
-**Example:**
-
-```typescript
-import { countFilledCells, createSudoku, Difficulty } from '@hackettyam/sudoku-tools'
-
-const { board, solved } = createSudoku(Difficulty.Normal)
-
-console.log(countFilledCells(solved)) // 81 (complete board)
-console.log(countFilledCells(board))  // 35 (Normal difficulty hints)
-```
-
----
-
-#### `countEmptyCells(board)`
-
-Counts the number of empty cells in a Sudoku board.
-
-**Parameters:**
-- `board`: `BoardType` - The Sudoku board to count.
-
-**Returns:**
-- `number` - The number of cells that are empty (value === 0).
-
-**Example:**
-
-```typescript
-import { countEmptyCells, createSudoku, Difficulty } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku(Difficulty.Normal)
-
-console.log(countEmptyCells(board)) // 46 (81 - 35 hints)
-```
-
----
-
-#### `countValidCells(board, solved)`
-
-Counts the number of valid (correct) cells in a Sudoku board by comparing against the solution.
-
-**Parameters:**
-- `board`: `BoardType` - The current Sudoku board state.
-- `solved`: `BoardType` - The solved Sudoku board to compare against.
-
-**Returns:**
-- `number` - The number of cells that match the solution (empty cells not counted).
-
-**Example:**
-
-```typescript
-import { countValidCells, createSudoku, cloneBoard } from '@hackettyam/sudoku-tools'
-
-const { board, solved } = createSudoku()
-
-// All pre-filled cells are valid
-console.log(countValidCells(board, solved)) // 35 (for Normal difficulty)
-
-// Player fills a correct cell
-const playerBoard = cloneBoard(board)
-playerBoard[0][0] = solved[0][0]
-console.log(countValidCells(playerBoard, solved)) // 36
-```
-
----
-
-#### `countInvalidCells(board, solved)`
-
-Counts the number of invalid (incorrect) cells in a Sudoku board by comparing against the solution.
-
-**Parameters:**
-- `board`: `BoardType` - The current Sudoku board state.
-- `solved`: `BoardType` - The solved Sudoku board to compare against.
-
-**Returns:**
-- `number` - The number of cells that don't match the solution (empty cells not counted).
-
-**Example:**
-
-```typescript
-import { countInvalidCells, createSudoku, cloneBoard } from '@hackettyam/sudoku-tools'
-
-const { board, solved } = createSudoku()
-const playerBoard = cloneBoard(board)
-
-// Player fills a wrong value
-playerBoard[0][0] = solved[0][0] === 1 ? 2 : 1
-
-console.log(countInvalidCells(playerBoard, solved)) // 1
-```
-
----
-
-#### `solvePuzzle(board)`
-
-Solves a Sudoku puzzle using backtracking algorithm.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku puzzle to solve.
-
-**Returns:**
-
-- `BoardType | null` - The solved board, or `null` if no solution exists.
-
-**Example:**
-
-```typescript
-import { solvePuzzle, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku()
-const solution = solvePuzzle(board)
-
-if (solution) {
-  console.log('Puzzle solved!', solution)
-} else {
-  console.log('No solution exists')
-}
-```
-
----
-
-#### `hasUniqueSolution(board)`
-
-Checks if a Sudoku puzzle has exactly one solution.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku puzzle to check.
-
-**Returns:**
-
-- `boolean` - `true` if the puzzle has exactly one solution.
-
-**Example:**
-
-```typescript
-import { hasUniqueSolution, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku()
-console.log(hasUniqueSolution(board)) // true
-```
-
----
-
-#### `getCandidates(board, row, col)`
-
-Gets all valid candidate values for a specific cell.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku board.
-- `row`: `number` - Row index (0-8).
-- `col`: `number` - Column index (0-8).
-
-**Returns:**
-
-- `number[]` - Array of valid values (1-9) that can be placed in the cell.
-
-**Example:**
-
-```typescript
-import { getCandidates, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku()
-const candidates = getCandidates(board, 0, 0)
-
-console.log('Valid values for cell (0,0):', candidates) // e.g., [1, 4, 7]
-```
-
----
-
-#### `getHint(board)`
-
-Finds a cell and value that can be filled using logical deduction.
-
-**Parameters:**
-
-- `board`: `BoardType` - The current board state.
-
-**Returns:**
-
-- `HintResult | null` - Object with `row`, `col`, and `value`, or `null` if no hint found.
-
-**Example:**
-
-```typescript
-import { getHint, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku()
-const hint = getHint(board)
-
-if (hint) {
-  console.log(`Place ${hint.value} at (${hint.row}, ${hint.col})`)
-}
-```
-
----
-
-#### `isComplete(board)`
-
-Checks if all cells in the board are filled (no empty cells).
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku board to check.
-
-**Returns:**
-
-- `boolean` - `true` if board has no empty cells.
-
-**Example:**
-
-```typescript
-import { isComplete, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { board, solved } = createSudoku()
-
-console.log(isComplete(board))  // false (has empty cells)
-console.log(isComplete(solved)) // true (fully filled)
-```
-
----
-
-#### `isSolved(board, solved)`
-
-Checks if the current board matches the solution.
-
-**Parameters:**
-
-- `board`: `BoardType` - The current board state.
-- `solved`: `BoardType` - The solved board to compare against.
-
-**Returns:**
-
-- `boolean` - `true` if the board matches the solution.
-
-**Example:**
-
-```typescript
-import { isSolved, createSudoku, cloneBoard } from '@hackettyam/sudoku-tools'
-
-const { board, solved } = createSudoku()
-
-console.log(isSolved(board, solved))  // false
-console.log(isSolved(solved, solved)) // true
-```
-
----
-
-#### `getEmptyCells(board)`
-
-Gets all empty cell positions in the board.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku board.
-
-**Returns:**
-
-- `BoardCellType[]` - Array of `{ row, col }` objects for each empty cell.
-
-**Example:**
-
-```typescript
-import { getEmptyCells, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku()
-const emptyCells = getEmptyCells(board)
-
-console.log(`${emptyCells.length} cells to fill`)
-emptyCells.forEach(cell => console.log(`Empty: (${cell.row}, ${cell.col})`))
-```
-
----
-
-#### `getInvalidCells(board, solved)`
-
-Gets all cells that have incorrect values.
-
-**Parameters:**
-
-- `board`: `BoardType` - The current board state.
-- `solved`: `BoardType` - The solved board to compare against.
-
-**Returns:**
-
-- `BoardCellType[]` - Array of `{ row, col }` objects for each invalid cell.
-
-**Example:**
-
-```typescript
-import { getInvalidCells, createSudoku, cloneBoard } from '@hackettyam/sudoku-tools'
-
-const { board, solved } = createSudoku()
-const playerBoard = cloneBoard(board)
-
-// Make a wrong move
-playerBoard[0][0] = solved[0][0] === 1 ? 2 : 1
-
-const invalidCells = getInvalidCells(playerBoard, solved)
-console.log('Invalid cells:', invalidCells) // [{ row: 0, col: 0 }]
-```
-
----
-
-#### `setCellValue(board, options)`
-
-Creates a new board with a cell value changed (immutable operation).
-
-**Parameters:**
-
-- `board`: `BoardType` - The original board.
-- `options`: `SetCellOptions` - Object with `row`, `col`, and `value`.
-
-**Returns:**
-
-- `BoardType` - A new board with the updated value.
-
-**Example:**
-
-```typescript
-import { setCellValue, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku()
-const newBoard = setCellValue(board, { row: 0, col: 0, value: 5 })
-
-console.log(board[0][0])    // Original value unchanged
-console.log(newBoard[0][0]) // 5
-```
-
----
-
-#### `clearCell(board, row, col)`
-
-Creates a new board with a cell cleared (immutable operation).
-
-**Parameters:**
-
-- `board`: `BoardType` - The original board.
-- `row`: `number` - Row index (0-8).
-- `col`: `number` - Column index (0-8).
-
-**Returns:**
-
-- `BoardType` - A new board with the cell set to 0.
-
-**Example:**
-
-```typescript
-import { clearCell, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { solved } = createSudoku()
-const newBoard = clearCell(solved, 0, 0)
-
-console.log(solved[0][0])   // Original value
-console.log(newBoard[0][0]) // 0
-```
-
----
-
-#### `serializeBoard(board)`
-
-Converts a board to a compact 81-character string.
-
-**Parameters:**
-
-- `board`: `BoardType` - The board to serialize.
-
-**Returns:**
-
-- `string` - 81-character string representation.
-
-**Example:**
-
-```typescript
-import { serializeBoard, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku()
-const serialized = serializeBoard(board)
-
-console.log(serialized) // "003050709400709020089023050..."
-console.log(serialized.length) // 81
-```
-
----
-
-#### `deserializeBoard(str)`
-
-Converts a 81-character string back to a board.
-
-**Parameters:**
-
-- `str`: `string` - 81-character string representation.
-
-**Returns:**
-
-- `BoardType` - The reconstructed board.
-
-**Throws:**
-
-- Error if string is not exactly 81 characters or contains invalid characters.
-
-**Example:**
-
-```typescript
-import { deserializeBoard, serializeBoard, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku()
-const serialized = serializeBoard(board)
-const restored = deserializeBoard(serialized)
-
-// board and restored are equivalent
-```
-
----
-
-#### `rotateBoard(board, times?)`
-
-Rotates the board 90 degrees clockwise.
-
-**Parameters:**
-
-- `board`: `BoardType` - The board to rotate.
-- `times` (optional): `number` - Number of 90° rotations (default: 1).
-
-**Returns:**
-
-- `BoardType` - A new rotated board.
-
-**Example:**
-
-```typescript
-import { rotateBoard, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku()
-
-const rotated90 = rotateBoard(board)      // 90° clockwise
-const rotated180 = rotateBoard(board, 2)  // 180°
-const rotated270 = rotateBoard(board, 3)  // 270° clockwise
-```
-
----
-
-#### `mirrorBoard(board, direction)`
-
-Mirrors the board horizontally or vertically.
-
-**Parameters:**
-
-- `board`: `BoardType` - The board to mirror.
-- `direction`: `'horizontal' | 'vertical'` - Mirror direction.
-
-**Returns:**
-
-- `BoardType` - A new mirrored board.
-
-**Example:**
-
-```typescript
-import { mirrorBoard, createSudoku } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku()
-
-const horizontalMirror = mirrorBoard(board, 'horizontal')
-const verticalMirror = mirrorBoard(board, 'vertical')
-```
-
----
-
-#### `getDifficulty(board)`
-
-Analyzes and estimates the difficulty of a puzzle.
-
-**Parameters:**
-
-- `board`: `BoardType` - The puzzle to analyze.
-
-**Returns:**
-
-- `DifficultyResult` - Object containing:
-  - `difficulty`: The estimated difficulty level
-  - `emptyCells`: Number of empty cells
-  - `avgCandidates`: Average candidates per empty cell
-  - `minCandidates`: Minimum candidates found
-  - `score`: Numeric difficulty score
-
-**Example:**
-
-```typescript
-import { getDifficulty, createSudoku, Difficulty } from '@hackettyam/sudoku-tools'
-
-const { board } = createSudoku(Difficulty.Hard)
-const result = getDifficulty(board)
-
-console.log(result.difficulty)    // 'hard'
-console.log(result.emptyCells)    // ~51
-console.log(result.avgCandidates) // ~4.5
-console.log(result.score)         // ~55
-```
-
----
-
-#### `generateWithUniqueSolution(difficulty?)`
-
-Generates a puzzle with a guaranteed unique solution (slower but higher quality).
-
-**Parameters:**
-
-- `difficulty` (optional): `Difficulty` - The difficulty level. Defaults to `Difficulty.Normal`.
-
-**Returns:**
-
-- `GeneratePuzzleResult` - An object containing `board` and `solved`.
-
-**Example:**
-
-```typescript
-import { generateWithUniqueSolution, Difficulty, hasUniqueSolution } from '@hackettyam/sudoku-tools'
-
-const { board, solved } = generateWithUniqueSolution(Difficulty.Hard)
-
-// Guaranteed to have exactly one solution
-console.log(hasUniqueSolution(board)) // true
-```
-
----
-
-## Advanced Examples
-
-### Creating a Custom Puzzle Generator
+### 🧩 SudokuPuzzle Methods
+
+| Method | Description |
+|--------|-------------|
+| ✏️ `setCell(row, col, value)` | Place a number in a cell |
+| 🗑️ `clearCell(row, col)` | Erase a cell |
+| 📋 `getCandidates(row, col)` | Get valid options for a cell |
+| 💡 `getHint()` | Get help when stuck |
+| 📊 `getProgress()` | See completion stats |
+| 🛡️ `isValidMove(row, col, value)` | Check before placing |
+| ✅ `isComplete()` | All cells filled? |
+| 🏆 `isSolved()` | Puzzle solved correctly? |
+| 🔄 `reset(randomize?)` | Start over |
+
+### 🎚️ Difficulty Levels
+
+Choose the right challenge:
+
+| Level | Hints | Empty Cells | Best For |
+|-------|-------|-------------|----------|
+| 🟢 `Novice` | 50 | 31 | Beginners |
+| 🟡 `Easy` | 40 | 41 | Casual play |
+| 🟠 `Normal` | 35 | 46 | Regular players |
+| 🔴 `Hard` | 30 | 51 | Challenge seekers |
+| ⚫ `Expert` | 20 | 61 | Sudoku masters |
+
+## 🔧 Utilities
+
+Powerful helper functions for advanced use cases:
 
 ```typescript
 import {
-  cloneBoard,
-  randomizeBoard,
-  emptyCells,
-  SUDOKU_BASE_BOARD,
-  type BoardType,
+  // 🎲 Board manipulation
+  cloneBoard,          // Deep copy a board
+  setCellValue,        // Immutably set a cell
+  clearCell,           // Immutably clear a cell
+
+  // 🧠 Solving
+  solvePuzzle,         // Solve any valid puzzle
+  hasUniqueSolution,   // Verify single solution
+
+  // ✅ Validation
+  isValidPuzzle,       // Check entire board
+  isValidRow,          // Check specific row
+  isValidColumn,       // Check specific column
+  isValidBox,          // Check 3x3 box
+
+  // 🔄 Transformations
+  rotateBoard,         // Rotate 90° clockwise
+  mirrorBoard,         // Flip horizontally/vertically
+  randomizeBoard,      // Shuffle for variety
+
+  // 💾 Serialization
+  serializeBoard,      // Board → string (save)
+  deserializeBoard,    // String → board (load)
+
+  // 📊 Analysis
+  getDifficulty,       // Estimate puzzle difficulty
+  getCandidates,       // Valid values for a cell
+  getHint,             // Find next move
 } from '@hackettyam/sudoku-tools'
-
-function createCustomPuzzle(hints: number): { puzzle: BoardType; solution: BoardType } {
-  // Start with the base board
-  const solution = cloneBoard(SUDOKU_BASE_BOARD)
-
-  // Randomize to create a unique puzzle
-  randomizeBoard(solution)
-
-  // Create the puzzle by emptying cells
-  const puzzle = cloneBoard(solution)
-  emptyCells(puzzle, hints)
-
-  return { puzzle, solution }
-}
-
-// Create a puzzle with exactly 25 hints
-const { puzzle, solution } = createCustomPuzzle(25)
 ```
 
-### Validating User Input
+## 📝 TypeScript Support
 
-```typescript
-import { SUDOKU_SIZE, SUDOKU_EMPTY_CELL, type BoardType } from '@hackettyam/sudoku-tools'
-
-function isValidMove(board: BoardType, row: number, col: number, value: number): boolean {
-  // Check if cell is empty
-  if (board[row][col] !== SUDOKU_EMPTY_CELL) {
-    return false
-  }
-
-  // Check row
-  for (let c = 0; c < SUDOKU_SIZE; c++) {
-    if (board[row][c] === value) return false
-  }
-
-  // Check column
-  for (let r = 0; r < SUDOKU_SIZE; r++) {
-    if (board[r][col] === value) return false
-  }
-
-  // Check 3x3 box
-  const boxRow = Math.floor(row / 3) * 3
-  const boxCol = Math.floor(col / 3) * 3
-  for (let r = boxRow; r < boxRow + 3; r++) {
-    for (let c = boxCol; c < boxCol + 3; c++) {
-      if (board[r][c] === value) return false
-    }
-  }
-
-  return true
-}
-```
-
-### Creating a Read-Only Map
-
-```typescript
-import {
-  createSudoku,
-  SUDOKU_SIZE,
-  SUDOKU_EMPTY_CELL,
-  type BoardReadOnlyType,
-} from '@hackettyam/sudoku-tools'
-
-function createReadOnlyMap(board: number[][]): BoardReadOnlyType {
-  const readOnly: BoardReadOnlyType = []
-
-  for (let r = 0; r < SUDOKU_SIZE; r++) {
-    readOnly[r] = []
-    for (let c = 0; c < SUDOKU_SIZE; c++) {
-      // Cells with values are read-only (pre-filled hints)
-      readOnly[r][c] = board[r][c] !== SUDOKU_EMPTY_CELL
-    }
-  }
-
-  return readOnly
-}
-
-const { board } = createSudoku()
-const readOnlyMap = createReadOnlyMap(board)
-
-// Check if a cell is editable
-const canEdit = (row: number, col: number) => !readOnlyMap[row][col]
-```
-
-### Tracking Game Progress
-
-```typescript
-import {
-  countFilledCells,
-  countEmptyCells,
-  countValidCells,
-  countInvalidCells,
-  createSudoku,
-  type BoardType,
-} from '@hackettyam/sudoku-tools'
-
-function getGameStats(board: BoardType, solved: BoardType) {
-  const filled = countFilledCells(board)
-  const empty = countEmptyCells(board)
-  const valid = countValidCells(board, solved)
-  const invalid = countInvalidCells(board, solved)
-  const progress = Math.round((filled / 81) * 100)
-
-  return { filled, empty, valid, invalid, progress }
-}
-
-const { board, solved } = createSudoku()
-const stats = getGameStats(board, solved)
-
-console.log(`Progress: ${stats.progress}%`)
-console.log(`Valid cells: ${stats.valid}`)
-console.log(`Invalid cells: ${stats.invalid}`)
-console.log(`Remaining: ${stats.empty}`)
-```
-
----
-
-### Internal Utilities
-
-These functions are used internally but are also exported for advanced use cases.
-
-#### `findEmptyCell(board)`
-
-Finds the first empty cell in the board.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku board.
-
-**Returns:**
-
-- `{ row, col } | null` - Position of the first empty cell or null if none.
-
----
-
-#### `isValidPlacement(board, position)`
-
-Checks if placing a value at a specific position is valid.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku board.
-- `position`: `CellPosition` - Object with `row`, `col`, and `value`.
-
-**Returns:**
-
-- `boolean` - True if the placement is valid.
-
----
-
-#### `backtrack(board)`
-
-Internal recursive backtracking solver. Mutates the board.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku board to solve.
-
-**Returns:**
-
-- `boolean` - True if solved, false otherwise.
-
----
-
-#### `countSolutions(board, count?)`
-
-Counts solutions using backtracking, stopping at 2.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku board.
-- `count`: `number` - Initial count (default: 0).
-
-**Returns:**
-
-- `number` - Number of solutions found (max 2).
-
----
-
-#### `shuffleArray(array)`
-
-Shuffles an array using Fisher-Yates algorithm.
-
-**Parameters:**
-
-- `array`: `T[]` - The array to shuffle.
-
-**Returns:**
-
-- `T[]` - A new shuffled array.
-
----
-
-#### `getAllCellPositions()`
-
-Gets all 81 cell positions in random order.
-
-**Returns:**
-
-- `[number, number][]` - Array of [row, col] tuples.
-
----
-
-#### `analyzeCandidates(board, emptyCount)`
-
-Analyzes candidates for all empty cells in a board.
-
-**Parameters:**
-
-- `board`: `BoardType` - The Sudoku board.
-- `emptyCount`: `number` - Number of empty cells.
-
-**Returns:**
-
-- `AnalysisResult` - Object with `avg`, `min`, `total`, `fewRatio`.
-
----
-
-#### `calculateDifficultyScore(params)`
-
-Calculates a numeric difficulty score.
-
-**Parameters:**
-
-- `params`: `ScoreParams` - Object with `emptyCells`, `avgCandidates`, `minCandidates`, `fewCandidatesRatio`.
-
-**Returns:**
-
-- `number` - Score between 0-100.
-
----
-
-#### `scoreToDifficulty(score)`
-
-Converts a numeric score to a difficulty level.
-
-**Parameters:**
-
-- `score`: `number` - Difficulty score (0-100).
-
-**Returns:**
-
-- `DifficultyType` - The corresponding difficulty level.
-
----
-
-## TypeScript Support
-
-This library is written in TypeScript and provides full type definitions. All exports are properly typed:
+Full type safety out of the box:
 
 ```typescript
 import type {
-  BoardType,
-  BoardCellType,
-  BoardReadOnlyType,
-  CellPosition,
-  CellValue,
-  DifficultyType,
-  DifficultyResult,
-  GeneratePuzzleResult,
-  HintResult,
-  SetCellOptions,
-  SudokuPuzzleOptions,
-  SudokuPuzzleStatistics,
-  SudokuState,
+  BoardType,              // 9x9 number grid
+  CellValue,              // 0-9 cell value
+  DifficultyType,         // Difficulty string union
+  HintResult,             // { row, col, value }
+  SudokuPuzzleStatistics, // Progress tracking
 } from '@hackettyam/sudoku-tools'
-
-import { SudokuPuzzle } from '@hackettyam/sudoku-tools'
 ```
+
+## 📄 License
+
+MIT © hackettyam
 
 ---
 
-## License
-
-MIT © hackettyam
+*Happy puzzling!* 🧩✨
