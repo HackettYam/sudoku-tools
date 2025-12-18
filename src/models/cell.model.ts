@@ -14,5 +14,20 @@ export interface SetCellOptions {
   row: number
 
   /** Value to set (1-9 or 0 for empty) */
-  value: number
+  value: CellValue
 }
+
+/**
+ * Represents a cell position with a value
+ */
+export interface CellPosition {
+  /** Column index (0-8) */
+  col: number
+
+  /** Row index (0-8) */
+  row: number
+
+  /** Value to place (1-9) */
+  value: CellValue
+}
+

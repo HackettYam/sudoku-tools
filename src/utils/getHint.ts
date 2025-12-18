@@ -1,5 +1,5 @@
 import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '@/constants'
-import type { BoardType, HintResult } from '@/models'
+import type { BoardType, CellValue, HintResult } from '@/models'
 
 /**
  * Gets a hint by finding an empty cell and returning its correct value from the solution.
@@ -28,7 +28,7 @@ export function getHint(board: BoardType, solved: BoardType): HintResult | null 
         return {
           col,
           row,
-          value: solved[row][col],
+          value: solved[row][col] as CellValue,
         }
       }
     }

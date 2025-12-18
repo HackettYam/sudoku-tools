@@ -31,38 +31,22 @@ This is a local library. Add it to your project's path aliases:
 import { createSudoku, Difficulty } from '@hackettyam/sudoku-tools'
 
 // Create a Sudoku puzzle
-const { board, solved } = createSudoku(Difficulty.Normal)
+const puzzle = createSudoku(Difficulty.Normal)
 
-console.log('Puzzle:', board)
-console.log('Solution:', solved)
-```
+// Access the boards
+console.log('Current:', puzzle.current)   // Player's progress
+console.log('Solution:', puzzle.solution) // Complete solution
+console.log('Difficulty:', puzzle.difficulty)
 
-**Output:**
+// Play the game
+const hint = puzzle.getHint()
+if (hint) {
+  puzzle.setCell(hint.row, hint.col, hint.value)
+}
 
-```text
-Puzzle: [
-  [0, 0, 3, 0, 5, 0, 7, 0, 9],
-  [4, 0, 0, 7, 0, 9, 0, 2, 0],
-  [0, 8, 9, 0, 2, 3, 0, 5, 0],
-  [2, 0, 0, 5, 0, 7, 0, 9, 1],
-  [0, 6, 7, 0, 9, 0, 2, 0, 4],
-  [8, 0, 0, 2, 0, 4, 0, 6, 0],
-  [0, 4, 5, 0, 7, 8, 0, 1, 2],
-  [6, 0, 0, 9, 0, 2, 0, 4, 0],
-  [0, 1, 2, 0, 4, 5, 0, 7, 8]
-]
-
-Solution: [
-  [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [4, 5, 6, 7, 8, 9, 1, 2, 3],
-  [7, 8, 9, 1, 2, 3, 4, 5, 6],
-  [2, 3, 4, 5, 6, 7, 8, 9, 1],
-  [5, 6, 7, 8, 9, 1, 2, 3, 4],
-  [8, 9, 1, 2, 3, 4, 5, 6, 7],
-  [3, 4, 5, 6, 7, 8, 9, 1, 2],
-  [6, 7, 8, 9, 1, 2, 3, 4, 5],
-  [9, 1, 2, 3, 4, 5, 6, 7, 8]
-]
+// Check progress
+console.log('Solved:', puzzle.isSolved())
+console.log('Progress:', puzzle.getProgress())
 ```
 
 > **Note:** The puzzle is randomized on each generation, so actual values will differ. Cells with `0` represent empty cells that the player needs to fill.
@@ -118,12 +102,12 @@ interface SetCellOptions {
 }
 ```
 
-#### `GameState`
+#### `SudokuState`
 
 Represents the complete state of a Sudoku game.
 
 ```typescript
-interface GameState {
+interface SudokuState {
   current: BoardType        // Player's progress
   difficulty: DifficultyType
   puzzle: BoardType         // Original puzzle
@@ -240,7 +224,7 @@ const SUDOKU_DIFFICULTY_HINTS: Record<Difficulty, DifficultyHints>
 
 #### `createSudoku(difficulty?)`
 
-Creates a Sudoku puzzle based on the difficulty level.
+Creates a Sudoku puzzle and returns a `SudokuPuzzle` instance with all methods needed to play.
 
 **Parameters:**
 
@@ -248,14 +232,12 @@ Creates a Sudoku puzzle based on the difficulty level.
 
 **Returns:**
 
-- `GeneratePuzzleResult` - An object containing:
-  - `board`: The puzzle board with empty cells
-  - `solved`: The complete solution
+- `SudokuPuzzle` - A puzzle instance with properties and methods (see SudokuPuzzle section below).
 
 **Example:**
 
 ```typescript
-import { createSudoku, Difficulty, countFilledCells } from '@hackettyam/sudoku-tools'
+import { createSudoku, Difficulty } from '@hackettyam/sudoku-tools'
 
 // Create with default difficulty (Normal)
 const puzzle1 = createSudoku()
@@ -266,8 +248,178 @@ const puzzle2 = createSudoku(Difficulty.Easy)
 // Create an expert puzzle
 const puzzle3 = createSudoku(Difficulty.Expert)
 
-console.log('Easy puzzle has', countFilledCells(puzzle2.board), 'hints') // 40 hints
-console.log('Expert puzzle has', countFilledCells(puzzle3.board), 'hints') // 20 hints
+console.log('Easy puzzle progress:', puzzle2.getProgress()) // { filledCells: 40, ... }
+console.log('Expert puzzle progress:', puzzle3.getProgress()) // { filledCells: 20, ... }
+```
+
+---
+
+### SudokuPuzzle
+
+The `SudokuPuzzle` class represents a Sudoku puzzle instance with all necessary methods to play.
+
+#### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `current` | `BoardType` | Current state of the board (player's progress) |
+| `original` | `BoardType` | The original puzzle board |
+| `solution` | `BoardType` | The complete solution |
+| `readOnly` | `BoardReadOnlyType` | Mask indicating which cells are pre-filled |
+| `difficulty` | `DifficultyType` | The difficulty level |
+
+#### Methods
+
+##### `setCell(row, col, value)`
+
+Sets a value in a cell. Only works if the cell is not read-only.
+
+**Parameters:**
+
+- `row`: `number` - Row index (0-8)
+- `col`: `number` - Column index (0-8)
+- `value`: `CellValue` - Value to set (0-9)
+
+**Returns:** `boolean` - `true` if cell was set, `false` if read-only.
+
+```typescript
+puzzle.setCell(0, 0, 5) // Set cell at row 0, col 0 to 5
+```
+
+---
+
+##### `clearCell(row, col)`
+
+Clears a cell (sets it to empty). Only works if the cell is not read-only.
+
+**Parameters:**
+
+- `row`: `number` - Row index (0-8)
+- `col`: `number` - Column index (0-8)
+
+**Returns:** `boolean` - `true` if cell was cleared, `false` if read-only.
+
+```typescript
+puzzle.clearCell(0, 0) // Clear cell at row 0, col 0
+```
+
+---
+
+##### `getCandidates(row, col)`
+
+Gets all valid candidate values for a specific cell.
+
+**Parameters:**
+
+- `row`: `number` - Row index (0-8)
+- `col`: `number` - Column index (0-8)
+
+**Returns:** `number[]` - Array of valid values (1-9) for the cell.
+
+```typescript
+const candidates = puzzle.getCandidates(0, 0)
+console.log('Possible values:', candidates) // [1, 3, 7]
+```
+
+---
+
+##### `getHint()`
+
+Gets a hint (next empty cell with its correct value).
+
+**Returns:** `HintResult | null` - Object with `row`, `col`, `value` or `null` if no empty cells.
+
+```typescript
+const hint = puzzle.getHint()
+if (hint) {
+  console.log(`Place ${hint.value} at row ${hint.row}, col ${hint.col}`)
+  puzzle.setCell(hint.row, hint.col, hint.value)
+}
+```
+
+---
+
+##### `getProgress()`
+
+Gets progress statistics for the puzzle.
+
+**Returns:** `SudokuPuzzleStatistics` - Object with:
+
+- `emptyCells`: Number of empty cells
+- `filledCells`: Number of filled cells
+- `validCells`: Number of correctly filled cells
+- `invalidCells`: Number of incorrectly filled cells
+- `progress`: Progress percentage (0-100)
+
+```typescript
+const stats = puzzle.getProgress()
+console.log(`Progress: ${stats.progress}%`)
+console.log(`Valid: ${stats.validCells}, Invalid: ${stats.invalidCells}`)
+```
+
+---
+
+##### `isComplete()`
+
+Checks if the puzzle is complete (all cells filled and valid).
+
+**Returns:** `boolean` - `true` if complete and valid.
+
+```typescript
+if (puzzle.isComplete()) {
+  console.log('Congratulations!')
+}
+```
+
+---
+
+##### `isValidMove(row, col, value)`
+
+Checks if a move is valid (doesn't violate Sudoku rules).
+
+**Parameters:**
+
+- `row`: `number` - Row index (0-8)
+- `col`: `number` - Column index (0-8)
+- `value`: `CellValue` - Value to check
+
+**Returns:** `boolean` - `true` if the move is valid.
+
+```typescript
+if (puzzle.isValidMove(0, 0, 5)) {
+  puzzle.setCell(0, 0, 5)
+} else {
+  console.log('Invalid move!')
+}
+```
+
+---
+
+##### `isSolved()`
+
+Checks if the puzzle is solved correctly (current matches solution).
+
+**Returns:** `boolean` - `true` if solved.
+
+```typescript
+if (puzzle.isSolved()) {
+  console.log('You solved it!')
+}
+```
+
+---
+
+##### `reset(withRandomize?)`
+
+Resets the puzzle to its original state.
+
+**Parameters:**
+
+- `withRandomize` (optional): `boolean` - If `true`, randomizes the board after reset.
+
+```typescript
+puzzle.reset() // Reset to original state
+puzzle.reset(true) // Reset and randomize
 ```
 
 ---
@@ -1369,14 +1521,19 @@ import type {
   BoardType,
   BoardCellType,
   BoardReadOnlyType,
+  CellPosition,
   CellValue,
   DifficultyType,
   DifficultyResult,
-  GameState,
   GeneratePuzzleResult,
   HintResult,
   SetCellOptions,
+  SudokuPuzzleOptions,
+  SudokuPuzzleStatistics,
+  SudokuState,
 } from '@hackettyam/sudoku-tools'
+
+import { SudokuPuzzle } from '@hackettyam/sudoku-tools'
 ```
 
 ---

@@ -19,7 +19,7 @@ export {
   DifficultyHints,
   type DifficultyResult,
   type DifficultyType,
-  type GameState,
+  type SudokuState,
   type GeneratePuzzleResult,
   type HintResult,
   type MirrorDirection,

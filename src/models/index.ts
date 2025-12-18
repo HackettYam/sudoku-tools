@@ -1,8 +1,30 @@
-export type { BoardType, BoardCellType, BoardReadOnlyType } from './board.model'
-export type { CellPosition } from './cellPosition.model'
-export type { CellValue, SetCellOptions } from './cell.model'
-export { Difficulty, DifficultyHints, type DifficultyResult, type DifficultyType } from './difficulty.model'
-export type { GameState } from './gameState.model'
+export type {
+  BoardType,
+  BoardCellType,
+  BoardReadOnlyType,
+} from './board.model'
+
+export type {
+  CellPosition,
+  CellValue,
+  SetCellOptions,
+} from './cell.model'
+
+export {
+  Difficulty,
+  DifficultyHints,
+  type DifficultyResult,
+  type DifficultyType,
+} from './difficulty.model'
+
+export type {
+  SudokuPuzzleOptions,
+  SudokuState,
+  SudokuPuzzleStatistics,
+} from './sudoku.model'
+
 export type { GeneratePuzzleResult } from './puzzle.model'
+
 export type { HintResult } from './hint.model'
+
 export type { MirrorDirection } from './mirror.model'
