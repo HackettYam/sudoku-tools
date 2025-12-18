@@ -31,7 +31,10 @@ importers:
         version: 8.50.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       '@vitest/coverage-v8':
         specifier: ^2.1.8
-        version: 2.1.9(vitest@2.1.9(@types/node@25.0.3))
+        version: 2.1.9(vitest@2.1.9)
+      '@vitest/ui':
+        specifier: ^2.1.8
+        version: 2.1.9(vitest@2.1.9)
       eslint:
         specifier: ^9.17.0
         version: 9.39.2(jiti@2.6.1)
@@ -55,7 +58,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^2.1.8
-        version: 2.1.9(@types/node@25.0.3)
+        version: 2.1.9(@types/node@25.0.3)(@vitest/ui@2.1.9)
 
 packages:
 
@@ -393,6 +396,9 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
+  '@polka/url@1.0.0-next.29':
+    resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
+
   '@rollup/rollup-android-arm-eabi@4.53.5':
     resolution: {integrity: sha512-iDGS/h7D8t7tvZ1t6+WPK04KD0MwzLZrG0se1hzBjSi5fyxlsiggoJHwh18PCFNn7tG43OWb6pdZ6Y+rMlmyNQ==}
     cpu: [arm]
@@ -724,6 +730,11 @@ packages:
 
   '@vitest/spy@2.1.9':
     resolution: {integrity: sha512-E1B35FwzXXTs9FHNK6bDszs7mtydNi5MIfUWpceJ8Xbfb1gBMscAnwLbEu+B44ed6W3XjL9/ehLPHR1fkf1KLQ==}
+
+  '@vitest/ui@2.1.9':
+    resolution: {integrity: sha512-izzd2zmnk8Nl5ECYkW27328RbQ1nKvkm6Bb5DAaz1Gk59EbLkiCMa6OLT0NoaAYTjOFS6N+SMYW1nh4/9ljPiw==}
+    peerDependencies:
+      vitest: 2.1.9
 
   '@vitest/utils@2.1.9':
     resolution: {integrity: sha512-v0psaMSkNJ3A2NMrUEHFRzJtDPFn+/VWZ5WxImB21T9fjucJRmS7xCS3ppEnARb9y11OAzaD+P2Ps+b+BGX5iQ==}
@@ -1318,6 +1329,9 @@ packages:
     peerDependenciesMeta:
       picomatch:
         optional: true
+
+  fflate@0.8.2:
+    resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
 
   figures@3.2.0:
     resolution: {integrity: sha512-yaduQFRKLXYOGgEn6AZau90j3ggSOyiqXU0F9JZfeXYhNa+Jk4X+s45A2zg5jns87GAFa34BBm2kXw4XpNcbdg==}
@@ -1937,6 +1951,10 @@ packages:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
 
+  mrmime@2.0.1:
+    resolution: {integrity: sha512-Y3wQdFg2Va6etvQ5I82yUhGdsKrcYox6p7FfL1LbK2J4V01F9TGlepTIhnK24t7koZibmg82KGglhA1XK5IsLQ==}
+    engines: {node: '>=10'}
+
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
@@ -2304,6 +2322,10 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
+  sirv@3.0.2:
+    resolution: {integrity: sha512-2wcC/oGxHis/BoHkkPwldgiPSYcpZK3JU28WoMVv55yHJgcZ8rlXvuG9iZggz+sU1d4bRgIGASwyWqjxu3FM0g==}
+    engines: {node: '>=18'}
+
   slice-ansi@5.0.0:
     resolution: {integrity: sha512-FC+lgizVPfie0kkhqUScwRu1O/lF6NOgJmlCgK+/LYxDCTk8sGelYaHDhFcDN+Sn3Cv+3VSa4Byeo+IMCzpMgQ==}
     engines: {node: '>=12'}
@@ -2484,6 +2506,10 @@ packages:
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
+
+  totalist@3.0.1:
+    resolution: {integrity: sha512-sf4i37nQ2LBx4m3wB74y+ubopq6W/dIzXg0FDGjsYnZHVa1Da8FH853wlL2gtUhg+xJXjfk3kUZS3BRoQeoQBQ==}
+    engines: {node: '>=6'}
 
   trim-newlines@3.0.1:
     resolution: {integrity: sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==}
@@ -3034,6 +3060,8 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
+  '@polka/url@1.0.0-next.29': {}
+
   '@rollup/rollup-android-arm-eabi@4.53.5':
     optional: true
 
@@ -3287,7 +3315,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
-  '@vitest/coverage-v8@2.1.9(vitest@2.1.9(@types/node@25.0.3))':
+  '@vitest/coverage-v8@2.1.9(vitest@2.1.9)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -3301,7 +3329,7 @@ snapshots:
       std-env: 3.10.0
       test-exclude: 7.0.1
       tinyrainbow: 1.2.0
-      vitest: 2.1.9(@types/node@25.0.3)
+      vitest: 2.1.9(@types/node@25.0.3)(@vitest/ui@2.1.9)
     transitivePeerDependencies:
       - supports-color
 
@@ -3338,6 +3366,17 @@ snapshots:
   '@vitest/spy@2.1.9':
     dependencies:
       tinyspy: 3.0.2
+
+  '@vitest/ui@2.1.9(vitest@2.1.9)':
+    dependencies:
+      '@vitest/utils': 2.1.9
+      fflate: 0.8.2
+      flatted: 3.3.3
+      pathe: 1.1.2
+      sirv: 3.0.2
+      tinyglobby: 0.2.15
+      tinyrainbow: 1.2.0
+      vitest: 2.1.9(@types/node@25.0.3)(@vitest/ui@2.1.9)
 
   '@vitest/utils@2.1.9':
     dependencies:
@@ -4098,6 +4137,8 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.3
 
+  fflate@0.8.2: {}
+
   figures@3.2.0:
     dependencies:
       escape-string-regexp: 1.0.5
@@ -4711,6 +4752,8 @@ snapshots:
 
   modify-values@1.0.1: {}
 
+  mrmime@2.0.1: {}
+
   ms@2.1.3: {}
 
   nanoid@3.3.11: {}
@@ -5113,6 +5156,12 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
+  sirv@3.0.2:
+    dependencies:
+      '@polka/url': 1.0.0-next.29
+      mrmime: 2.0.1
+      totalist: 3.0.1
+
   slice-ansi@5.0.0:
     dependencies:
       ansi-styles: 6.2.3
@@ -5302,6 +5351,8 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
+  totalist@3.0.1: {}
+
   trim-newlines@3.0.1: {}
 
   ts-api-utils@2.1.0(typescript@5.9.3):
@@ -5441,7 +5492,7 @@ snapshots:
       '@types/node': 25.0.3
       fsevents: 2.3.3
 
-  vitest@2.1.9(@types/node@25.0.3):
+  vitest@2.1.9(@types/node@25.0.3)(@vitest/ui@2.1.9):
     dependencies:
       '@vitest/expect': 2.1.9
       '@vitest/mocker': 2.1.9(vite@5.4.21(@types/node@25.0.3))
@@ -5465,6 +5516,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 25.0.3
+      '@vitest/ui': 2.1.9(vitest@2.1.9)
     transitivePeerDependencies:
       - less
       - lightningcss
