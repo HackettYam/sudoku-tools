@@ -1,6 +1,6 @@
 {
   "name": "@hackettyam/sudoku-tools",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A lightweight, zero-dependency TypeScript library for Sudoku puzzle generation, manipulation, and utilities.",
   "main": "./dist/cjs/index.js",
   "module": "./dist/index.js",
