@@ -1,5 +1,5 @@
 import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '@/constants'
-import type { BoardType } from '@/models'
+import type { BoardType, CellValue } from '@/models'
 
 import { findEmptyCell } from './findEmptyCell'
 import { isValidPlacement } from './isValidPlacement'
@@ -32,7 +32,7 @@ export function backtrack(board: BoardType): boolean {
   const { col, row } = emptyCell
 
   for (let num = 1; num <= SUDOKU_SIZE; num++) {
-    if (isValidPlacement(board, { col, row, value: num })) {
+    if (isValidPlacement(board, { col, row, value: num as CellValue })) {
       board[row][col] = num
 
       if (backtrack(board)) {

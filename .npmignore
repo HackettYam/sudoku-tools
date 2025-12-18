@@ -1,0 +1,36 @@
+# Source files
+src/
+
+# Config files
+*.config.ts
+*.config.js
+tsconfig*.json
+!tsconfig.json
+eslint.config.mjs
+.eslintrc*
+.prettierrc*
+.editorconfig
+.versionrc*
+
+# Test files
+**/*.test.ts
+**/__tests__/
+coverage/
+
+# Development
+.husky/
+.github/
+.vscode/
+node_modules/
+
+# Git
+.git/
+.gitignore
+
+# Docs (included in package, but optional to exclude)
+# docs/
+
+# Misc
+*.log
+*.tgz
+.DS_Store
