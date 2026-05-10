@@ -1,6 +1,7 @@
-import { SUDOKU_EMPTY_CELL } from '../constants'
+import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '../constants'
 import type { BoardType } from '../models'
 import { cloneBoard } from './cloneBoard'
+import { validateCellIndex } from './validateCellIndex'
 
 /**
  * Clears a cell (sets it to empty) and returns a new board (immutable operation).
@@ -10,6 +11,7 @@ import { cloneBoard } from './cloneBoard'
  * @param row - Row index (0-8)
  * @param col - Column index (0-8)
  * @returns A new board with the cell cleared
+ * @throws {Error} If row or col is outside the range 0-8
  *
  * @example
  * ```typescript
@@ -23,6 +25,11 @@ import { cloneBoard } from './cloneBoard'
  * ```
  */
 export function clearCell(board: BoardType, row: number, col: number): BoardType {
+  if (!validateCellIndex(row, col)) {
+    throw new Error(`Invalid cell coordinates: (${row}, ${col}). `
+      + `Row and column must be integers between 0 and ${SUDOKU_SIZE - 1}.`)
+  }
+
   const newBoard = cloneBoard(board)
   newBoard[row][col] = SUDOKU_EMPTY_CELL
 

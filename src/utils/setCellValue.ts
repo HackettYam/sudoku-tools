@@ -1,5 +1,7 @@
+import { SUDOKU_SIZE } from '../constants'
 import type { BoardType, SetCellOptions } from '../models'
 import { cloneBoard } from './cloneBoard'
+import { validateCellIndex } from './validateCellIndex'
 
 /**
  * Sets a value in a cell and returns a new board (immutable operation).
@@ -8,6 +10,7 @@ import { cloneBoard } from './cloneBoard'
  * @param board - The Sudoku board
  * @param options - Object with row, col, and value
  * @returns A new board with the value set
+ * @throws {Error} If row or col is outside the range 0-8
  *
  * @example
  * ```typescript
@@ -22,6 +25,12 @@ import { cloneBoard } from './cloneBoard'
  */
 export function setCellValue(board: BoardType, options: SetCellOptions): BoardType {
   const { col, row, value } = options
+
+  if (!validateCellIndex(row, col)) {
+    throw new Error(`Invalid cell coordinates: (${row}, ${col}). `
+      + `Row and column must be integers between 0 and ${SUDOKU_SIZE - 1}.`)
+  }
+
   const newBoard = cloneBoard(board)
   newBoard[row][col] = value
 

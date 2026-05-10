@@ -35,6 +35,8 @@ Creates a new board with a cell value changed (immutable).
 setCellValue(board: BoardType, options: SetCellOptions): BoardType
 ```
 
+**Throws:** `Error` if row or col is outside the range 0-8.
+
 **Example:**
 
 ```typescript
@@ -53,6 +55,8 @@ Creates a new board with a cell cleared (immutable).
 ```typescript
 clearCell(board: BoardType, row: number, col: number): BoardType
 ```
+
+**Throws:** `Error` if row or col is outside the range 0-8.
 
 **Example:**
 
@@ -214,6 +218,8 @@ Gets valid candidate values for a cell. Perfect for pencil marks!
 ```typescript
 getCandidates(board: BoardType, row: number, col: number): number[]
 ```
+
+**Throws:** `Error` if row or col is outside the range 0-8.
 
 **Example:**
 
@@ -377,6 +383,8 @@ Checks if placing a value is valid.
 ```typescript
 isValidPlacement(board: BoardType, position: CellPosition): boolean
 ```
+
+**Throws:** `Error` if row or col is outside the range 0-8.
 
 ---
 
@@ -567,6 +575,27 @@ const restored = deserializeBoard(str)
 ---
 
 ## ⚙️ Internal Utilities
+
+### `validateCellIndex(row, col)` ✅
+
+Validates that row and column indices are within Sudoku bounds (0-8).
+
+```typescript
+validateCellIndex(row: number, col: number): boolean
+```
+
+**Example:**
+
+```typescript
+import { validateCellIndex } from '@hackettyam/sudoku-tools'
+
+validateCellIndex(0, 0)  // true
+validateCellIndex(8, 8)  // true
+validateCellIndex(-1, 0) // false
+validateCellIndex(9, 0)  // false
+```
+
+---
 
 ### `backtrack(board)` 🧠
 

@@ -64,4 +64,5 @@ export {
   swapColWithinStack,
   swapDigits,
   swapRowWithinBand,
+  validateCellIndex,
 } from './utils'

@@ -1,4 +1,4 @@
-import { SUDOKU_EMPTY_CELL } from '../constants'
+import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '../constants'
 import {
   type BoardReadOnlyType,
   type BoardType,
@@ -21,6 +21,7 @@ import {
   isSolved,
   isValidPlacement,
   randomizeBoard,
+  validateCellIndex,
 } from '../utils'
 
 /**
@@ -56,8 +57,14 @@ export class SudokuPuzzle implements SudokuState {
    * Clears a cell (sets it to empty).
    * Only clears if the cell is not read-only.
    * @returns true if cell was cleared, false if cell is read-only
+   * @throws {Error} If row or col is outside the range 0-8
    */
   public clearCell(row: number, col: number): boolean {
+    if (!validateCellIndex(row, col)) {
+      throw new Error(`Invalid cell coordinates: (${row}, ${col}). `
+        + `Row and column must be integers between 0 and ${SUDOKU_SIZE - 1}.`)
+    }
+
     if (this.readOnly[row][col]) {
       return false
     }
@@ -68,8 +75,14 @@ export class SudokuPuzzle implements SudokuState {
 
   /**
    * Gets all valid candidate values for a specific cell.
+   * @throws {Error} If row or col is outside the range 0-8
    */
   public getCandidates(row: number, col: number): number[] {
+    if (!validateCellIndex(row, col)) {
+      throw new Error(`Invalid cell coordinates: (${row}, ${col}). `
+        + `Row and column must be integers between 0 and ${SUDOKU_SIZE - 1}.`)
+    }
+
     return getCandidates(this.current, row, col)
   }
 
@@ -142,8 +155,14 @@ export class SudokuPuzzle implements SudokuState {
    * Sets a value in a cell.
    * Only sets if the cell is not read-only.
    * @returns true if cell was set, false if cell is read-only
+   * @throws {Error} If row or col is outside the range 0-8
    */
   public setCell(row: number, col: number, value: CellValue): boolean {
+    if (!validateCellIndex(row, col)) {
+      throw new Error(`Invalid cell coordinates: (${row}, ${col}). `
+        + `Row and column must be integers between 0 and ${SUDOKU_SIZE - 1}.`)
+    }
+
     if (this.readOnly[row][col]) {
       return false
     }
