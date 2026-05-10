@@ -1,5 +1,4 @@
-import type { BoardType, SetCellOptions } from '@/models'
-
+import type { BoardType, SetCellOptions } from '../models'
 import { cloneBoard } from './cloneBoard'
 
 /**

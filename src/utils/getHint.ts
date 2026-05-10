@@ -1,5 +1,5 @@
-import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '@/constants'
-import type { BoardType, CellValue, HintResult } from '@/models'
+import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '../constants'
+import type { BoardType, CellValue, HintResult } from '../models'
 
 /**
  * Gets a hint by finding an empty cell and returning its correct value from the solution.

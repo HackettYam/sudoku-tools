@@ -1,5 +1,4 @@
-import { type BoardType, Difficulty, type DifficultyResult } from '@/models'
-
+import { type BoardType, Difficulty, type DifficultyResult } from '../models'
 import { analyzeCandidates } from './analyzeCandidates'
 import { calculateDifficultyScore } from './calculateDifficultyScore'
 import { countEmptyCells } from './countEmptyCells'

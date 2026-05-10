@@ -1,5 +1,5 @@
-import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '@/constants'
-import type { BoardCellType, BoardType } from '@/models'
+import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '../constants'
+import type { BoardCellType, BoardType } from '../models'
 
 /**
  * Gets all empty cell positions in a Sudoku board.

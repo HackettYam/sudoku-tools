@@ -1,10 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
-import { SUDOKU_DIFFICULTY_HINTS, SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '@/constants'
-import { SudokuPuzzle } from '@/entities/sudoku.entity'
-import { Difficulty, DifficultyHints } from '@/models'
-import { countFilledCells, isValidPuzzle } from '@/utils'
-
+import { SUDOKU_DIFFICULTY_HINTS, SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '../../constants'
+import { SudokuPuzzle } from '../../entities/sudoku.entity'
+import { Difficulty, DifficultyHints } from '../../models'
+import { countFilledCells, isValidPuzzle } from '../../utils'
 import { createSudoku } from '../createSudoku'
 
 describe('createSudoku', () => {

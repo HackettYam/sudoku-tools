@@ -4,8 +4,7 @@ import {
   SUDOKU_BASE_BOARD,
   SUDOKU_EMPTY_CELL,
   SUDOKU_SIZE,
-} from '@/constants'
-
+} from '../../constants'
 import { cloneBoard } from '../cloneBoard'
 import { emptyCells } from '../emptyCells'
 

@@ -1,7 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { SUDOKU_BASE_BOARD } from '@/constants'
-
+import { SUDOKU_BASE_BOARD } from '../../constants'
 import { swapRowWithinBand } from '../swapRowWithinBand'
 
 describe('swapRowWithinBand', () => {

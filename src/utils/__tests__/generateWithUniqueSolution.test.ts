@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { Difficulty } from '@/models'
-
+import { Difficulty } from '../../models'
 import { countEmptyCells } from '../countEmptyCells'
 import { generateWithUniqueSolution } from '../generateWithUniqueSolution'
 import { hasUniqueSolution } from '../hasUniqueSolution'

@@ -3,9 +3,8 @@ import {
   SUDOKU_DIFFICULTY_HINTS,
   SUDOKU_EMPTY_CELL,
   SUDOKU_SIZE,
-} from '@/constants'
-import { Difficulty, type GeneratePuzzleResult } from '@/models'
-
+} from '../constants'
+import { Difficulty, type GeneratePuzzleResult } from '../models'
 import { cloneBoard } from './cloneBoard'
 import { getAllCellPositions } from './getAllCellPositions'
 import { hasUniqueSolution } from './hasUniqueSolution'

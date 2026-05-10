@@ -4,10 +4,9 @@ import {
   SUDOKU_DIFFICULTY_HINTS,
   SUDOKU_EMPTY_CELL,
   SUDOKU_SIZE,
-} from '@/constants'
-import { Difficulty, DifficultyHints } from '@/models'
-import { countFilledCells, isValidPuzzle } from '@/utils'
-
+} from '../../constants'
+import { Difficulty, DifficultyHints } from '../../models'
+import { countFilledCells, isValidPuzzle } from '../../utils'
 import { generatePuzzle } from '../generatePuzzle'
 
 describe('generatePuzzle', () => {

@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { SUDOKU_SIZE } from '@/constants'
-
+import { SUDOKU_SIZE } from '../../constants'
 import { getAllCellPositions } from '../getAllCellPositions'
 
 describe('getAllCellPositions', () => {

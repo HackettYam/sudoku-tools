@@ -1,5 +1,4 @@
-import type { BoardType } from '@/models'
-
+import type { BoardType } from '../models'
 import { cloneBoard } from './cloneBoard'
 import { countSolutions } from './countSolutions'
 import { isValidPuzzle } from './isValidPuzzle'

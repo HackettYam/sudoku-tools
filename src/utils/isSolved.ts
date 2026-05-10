@@ -1,5 +1,5 @@
-import { SUDOKU_SIZE } from '@/constants'
-import type { BoardType } from '@/models'
+import { SUDOKU_SIZE } from '../constants'
+import type { BoardType } from '../models'
 
 /**
  * Checks if a Sudoku board matches the solution exactly.

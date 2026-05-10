@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { SUDOKU_BASE_BOARD } from '@/constants'
-
+import { SUDOKU_BASE_BOARD } from '../../constants'
 import { backtrack } from '../backtrack'
 import { cloneBoard } from '../cloneBoard'
 import { isValidPuzzle } from '../isValidPuzzle'

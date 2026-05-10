@@ -1,6 +1,5 @@
-import { SUDOKU_SIZE } from '@/constants'
-import type { BoardType } from '@/models'
-
+import { SUDOKU_SIZE } from '../constants'
+import type { BoardType } from '../models'
 import { isValidBox } from './isValidBox'
 import { isValidColumn } from './isValidColumn'
 import { isValidRow } from './isValidRow'

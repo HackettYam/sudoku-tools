@@ -1,6 +1,6 @@
-import { SudokuPuzzle } from '@/entities/sudoku.entity'
-import { Difficulty } from '@/models'
-import { generatePuzzle } from '@/utils'
+import { SudokuPuzzle } from '../entities/sudoku.entity'
+import { Difficulty } from '../models'
+import { generatePuzzle } from '../utils'
 
 /**
  * Creates a Sudoku puzzle based on the difficulty level.

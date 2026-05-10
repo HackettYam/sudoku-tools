@@ -1,5 +1,4 @@
-import { SUDOKU_SIZE } from '@/constants'
-
+import { SUDOKU_SIZE } from '../constants'
 import { shuffleArray } from './shuffleArray'
 
 /**

@@ -2,8 +2,7 @@
 
 import { describe, expect, it } from 'vitest'
 
-import { SUDOKU_BASE_BOARD, SUDOKU_EMPTY_CELL } from '@/constants'
-
+import { SUDOKU_BASE_BOARD, SUDOKU_EMPTY_CELL } from '../../constants'
 import { cloneBoard } from '../cloneBoard'
 import { isValidPuzzle } from '../isValidPuzzle'
 import { solvePuzzle } from '../solvePuzzle'

@@ -2,10 +2,9 @@
 
 import { describe, expect, it } from 'vitest'
 
-import { SUDOKU_BASE_BOARD, SUDOKU_EMPTY_CELL } from '@/constants'
-import { type CellValue, Difficulty } from '@/models'
-import { cloneBoard } from '@/utils'
-
+import { SUDOKU_BASE_BOARD, SUDOKU_EMPTY_CELL } from '../../constants'
+import { type CellValue, Difficulty } from '../../models'
+import { cloneBoard } from '../../utils'
 import { SudokuPuzzle } from '../sudoku.entity'
 
 /**

@@ -1,6 +1,5 @@
-import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '@/constants'
-import type { BoardType, CellValue } from '@/models'
-
+import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '../constants'
+import type { BoardType, CellValue } from '../models'
 import { findEmptyCell } from './findEmptyCell'
 import { isValidPlacement } from './isValidPlacement'
 

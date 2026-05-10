@@ -1,6 +1,5 @@
-import { SUDOKU_BASE_BOARD, SUDOKU_DIFFICULTY_HINTS } from '@/constants'
-import { Difficulty, type GeneratePuzzleResult } from '@/models'
-
+import { SUDOKU_BASE_BOARD, SUDOKU_DIFFICULTY_HINTS } from '../constants'
+import { Difficulty, type GeneratePuzzleResult } from '../models'
 import { cloneBoard } from './cloneBoard'
 import { emptyCells } from './emptyCells'
 import { randomizeBoard } from './randomizeBoard'

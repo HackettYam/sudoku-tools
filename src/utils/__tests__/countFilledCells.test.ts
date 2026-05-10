@@ -1,8 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { SUDOKU_BASE_BOARD } from '@/constants'
-import type { BoardType } from '@/models'
-
+import { SUDOKU_BASE_BOARD } from '../../constants'
+import type { BoardType } from '../../models'
 import { cloneBoard } from '../cloneBoard'
 import { countFilledCells } from '../countFilledCells'
 

@@ -1,5 +1,5 @@
-import { SUDOKU_SIZE } from '@/constants'
-import type { BoardType } from '@/models'
+import { SUDOKU_SIZE } from '../constants'
+import type { BoardType } from '../models'
 
 /**
  * Serializes a Sudoku board to a string of 81 characters.

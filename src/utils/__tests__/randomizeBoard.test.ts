@@ -1,7 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { SUDOKU_BASE_BOARD, SUDOKU_SIZE } from '@/constants'
-
+import { SUDOKU_BASE_BOARD, SUDOKU_SIZE } from '../../constants'
 import { cloneBoard } from '../cloneBoard'
 import { isValidPuzzle } from '../isValidPuzzle'
 import { randomizeBoard } from '../randomizeBoard'

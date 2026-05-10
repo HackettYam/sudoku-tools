@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { SUDOKU_BASE_BOARD } from '@/constants'
-
+import { SUDOKU_BASE_BOARD } from '../../constants'
+import type { CellValue } from '../../models'
 import { cloneBoard } from '../cloneBoard'
 import { isValidPlacement } from '../isValidPlacement'
 
@@ -120,7 +120,7 @@ describe('isValidPlacement', () => {
     board[0][0] = 0
     const [ [, existingValue] ] = [board[0]]
 
-    const result = isValidPlacement(board, { col: 0, row: 0, value: existingValue })
+    const result = isValidPlacement(board, { col: 0, row: 0, value: existingValue as CellValue })
 
     expect(result).toBe(false)
   })
@@ -130,7 +130,7 @@ describe('isValidPlacement', () => {
     board[0][0] = 0
     const [ [existingValue] ] = board.slice(1)
 
-    const result = isValidPlacement(board, { col: 0, row: 0, value: existingValue })
+    const result = isValidPlacement(board, { col: 0, row: 0, value: existingValue as CellValue })
 
     expect(result).toBe(false)
   })
@@ -140,7 +140,7 @@ describe('isValidPlacement', () => {
     board[0][0] = 0
     const [, [, existingValue] ] = board
 
-    const result = isValidPlacement(board, { col: 0, row: 0, value: existingValue })
+    const result = isValidPlacement(board, { col: 0, row: 0, value: existingValue as CellValue })
 
     expect(result).toBe(false)
   })

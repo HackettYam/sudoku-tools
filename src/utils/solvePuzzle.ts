@@ -1,5 +1,4 @@
-import type { BoardType } from '@/models'
-
+import type { BoardType } from '../models'
 import { backtrack } from './backtrack'
 import { cloneBoard } from './cloneBoard'
 import { isValidPuzzle } from './isValidPuzzle'

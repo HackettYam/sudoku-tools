@@ -1,4 +1,4 @@
-import { SUDOKU_EMPTY_CELL } from '@/constants'
+import { SUDOKU_EMPTY_CELL } from '../constants'
 import {
   type BoardReadOnlyType,
   type BoardType,
@@ -8,7 +8,7 @@ import {
   type SudokuPuzzleOptions,
   type SudokuPuzzleStatistics,
   type SudokuState,
-} from '@/models'
+} from '../models'
 import {
   cloneBoard,
   countEmptyCells,
@@ -21,7 +21,7 @@ import {
   isSolved,
   isValidPlacement,
   randomizeBoard,
-} from '@/utils'
+} from '../utils'
 
 /**
  * Represents a Sudoku puzzle instance with all necessary methods to play.

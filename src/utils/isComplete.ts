@@ -1,6 +1,5 @@
-import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '@/constants'
-import type { BoardType } from '@/models'
-
+import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '../constants'
+import type { BoardType } from '../models'
 import { isValidPuzzle } from './isValidPuzzle'
 
 /**

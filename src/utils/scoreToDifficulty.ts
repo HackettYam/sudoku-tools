@@ -1,4 +1,4 @@
-import { Difficulty, type DifficultyType } from '@/models'
+import { Difficulty, type DifficultyType } from '../models'
 
 /**
  * Converts a numeric score to a difficulty level.

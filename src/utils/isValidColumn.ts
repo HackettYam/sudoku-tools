@@ -1,5 +1,5 @@
-import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '@/constants'
-import type { BoardType } from '@/models'
+import { SUDOKU_EMPTY_CELL, SUDOKU_SIZE } from '../constants'
+import type { BoardType } from '../models'
 
 /**
  * Validates if a column in a Sudoku board contains digits 1-9 without repetition.

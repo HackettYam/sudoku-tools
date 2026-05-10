@@ -1,5 +1,4 @@
-import type { BoardType, CellPosition } from '@/models'
-
+import type { BoardType, CellPosition } from '../models'
 import { isValidBox } from './isValidBox'
 import { isValidColumn } from './isValidColumn'
 import { isValidRow } from './isValidRow'
