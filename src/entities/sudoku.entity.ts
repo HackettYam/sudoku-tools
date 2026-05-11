@@ -123,6 +123,11 @@ export class SudokuPuzzle implements SudokuState {
    * Checks if a move is valid (doesn't violate Sudoku rules).
    */
   public isValidMove(row: number, col: number, value: CellValue): boolean {
+    if (!validateCellIndex(row, col)) {
+      throw new Error(`Invalid cell coordinates: (${row}, ${col}). `
+        + `Row and column must be integers between 0 and ${SUDOKU_SIZE - 1}.`)
+    }
+
     if (this.readOnly[row][col]) {
       return false
     }
@@ -130,7 +135,9 @@ export class SudokuPuzzle implements SudokuState {
       return true
     }
 
-    return isValidPlacement(this.current, { col, row, value })
+    const placementResult = isValidPlacement(this.current, { col, row, value })
+
+    return placementResult.valid
   }
 
   /**

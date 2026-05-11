@@ -28,3 +28,7 @@ export type { GeneratePuzzleResult } from './puzzle.model'
 export type { HintResult } from './hint.model'
 
 export type { MirrorDirection } from './mirror.model'
+
+export type { SolveResult } from './solve.model'
+
+export type { PlacementValidationResult } from './validation.model'

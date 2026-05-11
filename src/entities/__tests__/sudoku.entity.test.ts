@@ -25,6 +25,13 @@ function createTestPuzzle(): SudokuPuzzle {
   })
 }
 
+const INVALID_COORDS: readonly [number, number][] = [
+  [-1, 0],
+  [0, -1],
+  [9, 0],
+  [0, 9],
+] as const
+
 describe('SudokuPuzzle', () => {
   describe('constructor', () => {
     it('should initialize with correct properties', () => {
@@ -365,4 +372,32 @@ describe('SudokuPuzzle', () => {
       expect(newProgress.emptyCells).toBe(initialProgress.emptyCells - 1)
     })
   })
+})
+
+describe('SudokuPuzzle invalid coordinates', () => {
+  for (const [row, col] of INVALID_COORDS) {
+    it(`setCell should throw for (row=${row}, col=${col})`, () => {
+      const puzzle = createTestPuzzle()
+
+      expect(() => puzzle.setCell(row, col, 5)).toThrow(/Invalid cell coordinates/)
+    })
+
+    it(`clearCell should throw for (row=${row}, col=${col})`, () => {
+      const puzzle = createTestPuzzle()
+
+      expect(() => puzzle.clearCell(row, col)).toThrow(/Invalid cell coordinates/)
+    })
+
+    it(`getCandidates should throw for (row=${row}, col=${col})`, () => {
+      const puzzle = createTestPuzzle()
+
+      expect(() => puzzle.getCandidates(row, col)).toThrow(/Invalid cell coordinates/)
+    })
+
+    it(`isValidMove should throw for (row=${row}, col=${col})`, () => {
+      const puzzle = createTestPuzzle()
+
+      expect(() => puzzle.isValidMove(row, col, 5)).toThrow(/Invalid cell coordinates/)
+    })
+  }
 })

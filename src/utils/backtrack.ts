@@ -31,7 +31,8 @@ export function backtrack(board: BoardType): boolean {
   const { col, row } = emptyCell
 
   for (let num = 1; num <= SUDOKU_SIZE; num++) {
-    if (isValidPlacement(board, { col, row, value: num as CellValue })) {
+    const placementResult = isValidPlacement(board, { col, row, value: num as CellValue })
+    if (placementResult.valid) {
       board[row][col] = num
 
       if (backtrack(board)) {

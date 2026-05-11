@@ -34,7 +34,8 @@ export function countSolutions(board: BoardType, count = 0): number {
   let currentCount = count
 
   for (let num = 1; num <= SUDOKU_SIZE; num++) {
-    if (isValidPlacement(board, { col, row, value: num as CellValue })) {
+    const placementResult = isValidPlacement(board, { col, row, value: num as CellValue })
+    if (placementResult.valid) {
       board[row][col] = num
       currentCount = countSolutions(board, currentCount)
 

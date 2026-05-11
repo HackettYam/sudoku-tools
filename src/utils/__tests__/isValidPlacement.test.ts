@@ -7,7 +7,7 @@ import { isValidPlacement } from '../isValidPlacement'
 
 // eslint-disable-next-line max-lines-per-function
 describe('isValidPlacement', () => {
-  it('should return true for valid placement in empty cell', () => {
+  it('should return valid: true for valid placement in empty cell', () => {
     const board: number[][] = [
       [
         0,
@@ -112,37 +112,243 @@ describe('isValidPlacement', () => {
 
     const result = isValidPlacement(board, { col: 0, row: 0, value: 1 })
 
-    expect(result).toBe(true)
+    expect(result.valid).toBe(true)
+    expect(result.reason).toBe('none')
   })
 
-  it('should return false for duplicate in row', () => {
+  it('should return valid: false for duplicate in row', () => {
+    // Row 0 already has value 5 in SUDOKU_BASE_BOARD, placing another 5 triggers row conflict
     const board = cloneBoard(SUDOKU_BASE_BOARD)
     board[0][0] = 0
-    const [ [, existingValue] ] = [board[0]]
+    const [, existingValue] = board[0] as [number, number]
 
     const result = isValidPlacement(board, { col: 0, row: 0, value: existingValue as CellValue })
 
-    expect(result).toBe(false)
+    expect(result.valid).toBe(false)
+    expect(result.reason).toBe('row')
   })
 
-  it('should return false for duplicate in column', () => {
-    const board = cloneBoard(SUDOKU_BASE_BOARD)
-    board[0][0] = 0
-    const [ [existingValue] ] = board.slice(1)
+  it('should return valid: false for duplicate in column', () => {
+    /*
+     * Board where column 0 has two 5s but no row conflicts
+     * [0][0] is empty, placing 5 should conflict with [4][0] which is 5
+     */
+    const board: number[][] = [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+    ]
 
-    const result = isValidPlacement(board, { col: 0, row: 0, value: existingValue as CellValue })
+    const result = isValidPlacement(board, { col: 0, row: 0, value: 5 })
 
-    expect(result).toBe(false)
+    expect(result.valid).toBe(false)
+    expect(result.reason).toBe('column')
   })
 
-  it('should return false for duplicate in box', () => {
-    const board = cloneBoard(SUDOKU_BASE_BOARD)
-    board[0][0] = 0
-    const [, [, existingValue] ] = board
+  it('should return valid: false for duplicate in box', () => {
+    // Board where box (0,0) has a 5 at [1][1], placing 5 at [0][0] should conflict in box only
+    const board: number[][] = [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+    ]
 
-    const result = isValidPlacement(board, { col: 0, row: 0, value: existingValue as CellValue })
+    const result = isValidPlacement(board, { col: 0, row: 0, value: 5 })
 
-    expect(result).toBe(false)
+    expect(result.valid).toBe(false)
+    expect(result.reason).toBe('box')
   })
 
   it('should not modify the original board', () => {
@@ -155,7 +361,7 @@ describe('isValidPlacement', () => {
     expect(board[0][0]).toBe(originalValue)
   })
 
-  it('should return true when placing valid value', () => {
+  it('should return valid: true when placing valid value', () => {
     const board: number[][] = [
       [
         0,
@@ -260,6 +466,7 @@ describe('isValidPlacement', () => {
 
     const result = isValidPlacement(board, { col: 0, row: 0, value: 1 })
 
-    expect(result).toBe(true)
+    expect(result.valid).toBe(true)
+    expect(result.reason).toBe('none')
   })
 })

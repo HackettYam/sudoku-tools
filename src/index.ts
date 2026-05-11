@@ -6,6 +6,12 @@ export {
   SUDOKU_DIFFICULTY_HINTS,
 } from './constants'
 
+// Entities
+export {
+  SudokuPuzzle,
+  type SudokuPuzzle as SudokuPuzzleType,
+} from './entities/sudoku.entity'
+
 // Features
 export { createSudoku } from './features'
 
@@ -24,25 +30,31 @@ export {
   type HintResult,
   type MirrorDirection,
   type SetCellOptions,
+  type SolveResult,
+  type PlacementValidationResult,
 } from './models'
 
 // Utils
 export {
   analyzeCandidates,
   clearCell,
+  checkGroup,
   cloneBoard,
   countEmptyCells,
   countFilledCells,
   countInvalidCells,
   countSolutions,
   countValidCells,
+  detectInvalidityReason,
   deserializeBoard,
   emptyCells,
   findEmptyCell,
   generatePuzzle,
   generateWithUniqueSolution,
   getAllCellPositions,
+  getBoxValues,
   getCandidates,
+  getColumnValues,
   getDifficulty,
   getEmptyCells,
   getHint,
@@ -51,13 +63,14 @@ export {
   isComplete,
   isSolved,
   isValidBox,
-  isValidColumn,
   isValidPlacement,
+  isValidColumn,
   isValidPuzzle,
   isValidRow,
   mirrorBoard,
   randomizeBoard,
   rotateBoard,
+  scoreToDifficulty,
   serializeBoard,
   setCellValue,
   solvePuzzle,

@@ -1,5 +1,5 @@
 import { SUDOKU_SIZE } from '../constants'
-import type { BoardType, CellPosition } from '../models'
+import type { BoardType, CellPosition, PlacementValidationResult } from '../models'
 import { isValidBox } from './isValidBox'
 import { isValidColumn } from './isValidColumn'
 import { isValidRow } from './isValidRow'
@@ -10,7 +10,7 @@ import { validateCellIndex } from './validateCellIndex'
  *
  * @param board - The Sudoku board
  * @param position - Object with row, col, and value
- * @returns true if the value can be placed at the position
+ * @returns A PlacementValidationResult with valid status and constraint info
  * @throws {Error} If row or col is outside the range 0-8
  *
  * @example
@@ -18,14 +18,16 @@ import { validateCellIndex } from './validateCellIndex'
  * import { isValidPlacement, createSudoku } from '@hackettyam/sudoku-tools'
  *
  * const { board } = createSudoku()
- * const canPlace = isValidPlacement(board, { row: 0, col: 0, value: 5 })
+ * const result = isValidPlacement(board, { row: 0, col: 0, value: 5 })
  *
- * if (canPlace) {
+ * if (result.valid) {
  *   console.log('Value 5 can be placed at (0, 0)')
+ * } else {
+ *   console.log(`Invalid: conflicts with ${result.reason}`)
  * }
  * ```
  */
-export function isValidPlacement(board: BoardType, position: CellPosition): boolean {
+export function isValidPlacement(board: BoardType, position: CellPosition): PlacementValidationResult {
   const { col, row, value } = position
 
   if (!validateCellIndex(row, col)) {
@@ -36,11 +38,24 @@ export function isValidPlacement(board: BoardType, position: CellPosition): bool
   const original = board[row][col]
   board[row][col] = value
 
-  const valid = isValidRow(board, row)
-    && isValidColumn(board, col)
-    && isValidBox(board, Math.floor(row / 3), Math.floor(col / 3))
+  // Check row constraint first
+  if (!isValidRow(board, row)) {
+    board[row][col] = original
+    return { reason: 'row', valid: false }
+  }
+
+  // Check column constraint second
+  if (!isValidColumn(board, col)) {
+    board[row][col] = original
+    return { reason: 'column', valid: false }
+  }
+
+  // Check box constraint third
+  if (!isValidBox(board, Math.floor(row / 3), Math.floor(col / 3))) {
+    board[row][col] = original
+    return { reason: 'box', valid: false }
+  }
 
   board[row][col] = original
-
-  return valid
+  return { reason: 'none', valid: true }
 }

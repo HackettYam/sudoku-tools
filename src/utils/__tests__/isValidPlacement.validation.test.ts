@@ -44,7 +44,8 @@ describe('isValidPlacement - Input Validation', () => {
 
     const result = isValidPlacement(cloneBoard(board), { col: 0, row: 0, value: 5 })
 
-    expect(result).toBe(true)
+    expect(result.valid).toBe(true)
+    expect(result.reason).toBe('none')
   })
 
   it('should work for valid boundary values (8, 8)', () => {
@@ -52,6 +53,7 @@ describe('isValidPlacement - Input Validation', () => {
 
     const result = isValidPlacement(cloneBoard(board), { col: 8, row: 8, value: 9 })
 
-    expect(result).toBe(true)
+    expect(result.valid).toBe(true)
+    expect(result.reason).toBe('none')
   })
 })

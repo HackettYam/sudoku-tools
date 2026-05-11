@@ -246,4 +246,13 @@ describe('countSolutions', () => {
 
     expect(result).toBe(2)
   })
+
+  it('should stop counting when count reaches 2', () => {
+    const board = cloneBoard(SUDOKU_BASE_BOARD)
+    board[0][0] = 0
+
+    const result = countSolutions(board, 2)
+
+    expect(result).toBe(2)
+  })
 })
