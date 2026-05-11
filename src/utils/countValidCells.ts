@@ -3,12 +3,23 @@ import type { BoardType } from '../models'
 
 /**
  * Counts the number of valid (correct) cells in a Sudoku board.
+ *
  * A cell is valid if it matches the corresponding cell in the solved board.
- * Empty cells are not counted as valid.
+ * Empty cells (0) are not counted as valid.
  *
  * @param board - The current Sudoku board state
  * @param solved - The solved Sudoku board to compare against
  * @returns The number of cells that match the solution
+ *
+ * @example
+ * ```typescript
+ * import { countValidCells, createSudoku } from '@hackettyam/sudoku-tools'
+ *
+ * const puzzle = createSudoku()
+ * const valid = countValidCells(puzzle.current, puzzle.solution)
+ *
+ * console.log(`${valid} cells are correctly filled`)
+ * ```
  */
 export function countValidCells(board: BoardType, solved: BoardType): number {
   let count = 0

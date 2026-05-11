@@ -4,10 +4,24 @@ import type { BoardType } from '../models'
 /**
  * Validates if a 3x3 box in a Sudoku board contains digits 1-9 without repetition.
  *
+ * Empty cells (value 0) are ignored during validation.
+ * Returns true if all non-empty cells in the 3x3 box are unique.
+ *
  * @param board - The Sudoku board to validate
- * @param boxRow - The row index of the box to validate
- * @param boxCol - The column index of the box to validate
- * @returns true if the box is valid, false otherwise
+ * @param boxRow - The row index of the box (0-2, represents which band)
+ * @param boxCol - The column index of the box (0-2, represents which stack)
+ * @returns true if the box is valid (no duplicate non-empty values), false otherwise
+ *
+ * @example
+ * ```typescript
+ * import { isValidBox } from '@hackettyam/sudoku-tools'
+ *
+ * const board = createSudoku().current
+ * // Check the center box (box at position [1,1])
+ * if (isValidBox(board, 1, 1)) {
+ *   console.log('Center box is valid')
+ * }
+ * ```
  */
 export function isValidBox(board: BoardType, boxRow: number, boxCol: number): boolean {
   const seen = new Set<number>()

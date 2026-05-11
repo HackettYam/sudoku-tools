@@ -1,10 +1,27 @@
 /**
- * Parameters for calculating difficulty score
+ * Parameters for calculating difficulty score.
+ *
+ * @example
+ * ```typescript
+ * const params: ScoreParams = {
+ *   avgCandidates: 4.5,
+ *   emptyCells: 50,
+ *   fewCandidatesRatio: 0.2,
+ *   minCandidates: 2
+ * }
+ * ```
  */
 interface ScoreParams {
+  /** Average number of candidates per empty cell */
   avgCandidates: number
+
+  /** Number of empty cells in the puzzle */
   emptyCells: number
+
+  /** Ratio of cells with 2 or fewer candidates */
   fewCandidatesRatio: number
+
+  /** Minimum candidates found in any empty cell */
   minCandidates: number
 }
 
@@ -24,7 +41,12 @@ interface ScoreParams {
  *   fewCandidatesRatio: 0.2,
  *   minCandidates: 2
  * })
+ *
+ * console.log(`Difficulty score: ${score.toFixed(1)}`)
  * ```
+ *
+ * @see getDifficulty
+ * @see scoreToDifficulty
  */
 export function calculateDifficultyScore(params: ScoreParams): number {
   const { avgCandidates, emptyCells, fewCandidatesRatio, minCandidates } = params

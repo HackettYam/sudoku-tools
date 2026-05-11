@@ -6,6 +6,16 @@ import type { BoardType } from '../models'
  *
  * @param board - The Sudoku board to count empty cells from
  * @returns The number of cells that are empty (value === 0)
+ *
+ * @example
+ * ```typescript
+ * import { countEmptyCells, createSudoku } from '@hackettyam/sudoku-tools'
+ *
+ * const { board } = createSudoku()
+ * const empty = countEmptyCells(board)
+ *
+ * console.log(`Puzzle has ${empty} empty cells`)
+ * ```
  */
 export function countEmptyCells(board: BoardType): number {
   let count = 0

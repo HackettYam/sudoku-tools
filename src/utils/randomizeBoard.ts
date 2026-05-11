@@ -4,12 +4,30 @@ import { swapRowWithinBand } from './swapRowWithinBand'
 import type { BoardType } from '../models/board.model'
 
 /**
- * Applies transformations to a Sudoku board to obtain randomness:
- * - Permutes digits randomly
- * - Permutes rows within 3x3 bands
- * - Permutes columns within 3x3 stacks
+ * Applies transformations to a Sudoku board to obtain randomness.
  *
- * @param board - The Sudoku board to randomize
+ * This function mutates the input board with three types of transformations:
+ * 1. Permutes digits (swaps pairs of numbers 1-9)
+ * 2. Permutes rows within 3x3 bands
+ * 3. Permutes columns within 3x3 stacks
+ *
+ * These transformations maintain the validity of the Sudoku board while
+ * creating a different puzzle that is still solvable.
+ *
+ * @param board - The Sudoku board to randomize (mutated in place)
+ *
+ * @example
+ * ```typescript
+ * import { randomizeBoard, cloneBoard } from '@hackettyam/sudoku-tools'
+ *
+ * const original = cloneBoard(SUDOKU_BASE_BOARD)
+ * randomizeBoard(original)
+ * // original is now a different valid Sudoku
+ * ```
+ *
+ * @see swapDigits
+ * @see swapRowWithinBand
+ * @see swapColWithinStack
  */
 export function randomizeBoard(board: BoardType): void {
   // Permute digits (swap between pairs randomly)

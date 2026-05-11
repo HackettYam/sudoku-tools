@@ -6,6 +6,16 @@ import type { BoardType } from '../models'
  *
  * @param board - The Sudoku board to count filled cells from
  * @returns The number of cells that are not empty (value !== 0)
+ *
+ * @example
+ * ```typescript
+ * import { countFilledCells, createSudoku } from '@hackettyam/sudoku-tools'
+ *
+ * const { board } = createSudoku()
+ * const filled = countFilledCells(board)
+ *
+ * console.log(`Puzzle has ${filled} filled cells`)
+ * ```
  */
 export function countFilledCells(board: BoardType): number {
   let count = 0

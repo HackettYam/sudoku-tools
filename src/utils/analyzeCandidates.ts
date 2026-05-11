@@ -3,12 +3,29 @@ import type { BoardType } from '../models'
 import { getCandidates } from './getCandidates'
 
 /**
- * Result of candidate analysis
+ * Result of candidate analysis for a Sudoku board.
+ *
+ * @example
+ * ```typescript
+ * const result: AnalysisResult = {
+ *   avg: 4.5,
+ *   fewRatio: 0.15,
+ *   min: 2,
+ *   total: 229
+ * }
+ * ```
  */
 interface AnalysisResult {
+  /** Average number of candidates per empty cell */
   avg: number
+
+  /** Ratio of cells with 2 or fewer candidates */
   fewRatio: number
+
+  /** Minimum candidates found in any empty cell */
   min: number
+
+  /** Total number of candidates across all empty cells */
   total: number
 }
 
