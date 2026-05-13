@@ -244,6 +244,73 @@ interface HintResult {
 
 ---
 
+## 🧩 Solving Types
+
+### `SolveResult`
+
+Result from `solvePuzzle()` function with detailed error information.
+
+```typescript
+interface SolveResult {
+  board: BoardType | null  // Solved board or null if unsolvable
+  error?: string            // Error message if solving failed
+}
+```
+
+**Error values:**
+- `"Invalid initial board: duplicate found in row {n}"`
+- `"Invalid initial board: duplicate found in column {n}"`
+- `"Invalid initial board: duplicate found in box ({row},{col})"`
+- `"Board is unsolvable: no valid candidates for cell ({row},{col})"`
+- `"Board is unsolvable: constraints contradiction detected"`
+
+**Example:**
+
+```typescript
+import { solvePuzzle, SolveResult } from '@hackettyam/sudoku-tools'
+
+const result: SolveResult = solvePuzzle(board)
+
+if (result.board) {
+  console.log('Solved!', result.board)
+} else {
+  console.error('Failed:', result.error)
+}
+```
+
+---
+
+### `PlacementValidationResult`
+
+Result from `isValidPlacement()` with detailed constraint information.
+
+```typescript
+interface PlacementValidationResult {
+  valid: boolean                          // Whether placement is valid
+  reason?: 'row' | 'column' | 'box' | 'none'  // Which constraint was violated
+}
+```
+
+**Example:**
+
+```typescript
+import { isValidPlacement, PlacementValidationResult } from '@hackettyam/sudoku-tools'
+
+const result: PlacementValidationResult = isValidPlacement(board, {
+  row: 0,
+  col: 0,
+  value: 5
+})
+
+if (result.valid) {
+  console.log('Can place value')
+} else {
+  console.log(`Cannot place: ${result.reason}`)
+}
+```
+
+---
+
 ## 🔄 Transformation Types
 
 ### `MirrorDirection`
@@ -272,7 +339,9 @@ import type {
   GeneratePuzzleResult,
   HintResult,
   MirrorDirection,
+  PlacementValidationResult,
   SetCellOptions,
+  SolveResult,
   SudokuPuzzleOptions,
   SudokuPuzzleStatistics,
   SudokuState,

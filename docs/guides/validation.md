@@ -115,13 +115,14 @@ import { isValidPlacement, createSudoku } from '@hackettyam/sudoku-tools'
 
 const puzzle = createSudoku()
 
-const valid = isValidPlacement(puzzle.current, {
+const result = isValidPlacement(puzzle.current, {
   row: 0,
   col: 0,
   value: 5,
 })
 
-console.log(valid) // true or false
+console.log(result.valid)   // true or false
+console.log(result.reason)   // 'none' | 'row' | 'column' | 'box'
 ```
 
 ---

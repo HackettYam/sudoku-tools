@@ -161,10 +161,10 @@ emptyCells(board, 30) // Keep only 30 hints
 Solves a puzzle using backtracking. Let the computer do the hard work!
 
 ```typescript
-solvePuzzle(board: BoardType): BoardType | null
+solvePuzzle(board: BoardType): SolveResult
 ```
 
-**Returns:** Solved board or `null` if unsolvable.
+**Returns:** `SolveResult` with `board` (solved board or null) and optional `error` message.
 
 **Example:**
 
@@ -205,6 +205,38 @@ Counts solutions (stops at 2 for efficiency).
 
 ```typescript
 countSolutions(board: BoardType, count?: number): number
+```
+
+---
+
+### `detectInvalidityReason(board)` 🔍
+
+Detects why a Sudoku board is invalid. Returns a descriptive error string.
+
+```typescript
+detectInvalidityReason(board: BoardType): string | null
+```
+
+**Returns:** Description of invalidity or `null` if board appears valid.
+
+**Error values:**
+- `"duplicate found in row {n}"`
+- `"duplicate found in column {n}"`
+- `"duplicate found in box ({row},{col})"`
+- `"invalid board size"`
+
+**Example:**
+
+```typescript
+import { detectInvalidityReason } from '@hackettyam/sudoku-tools'
+
+const board = [
+  [5, 5, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+]
+
+const reason = detectInvalidityReason(board)
+console.log(reason) // "duplicate found in row 0"
 ```
 
 ---
@@ -381,10 +413,80 @@ isValidBox(board: BoardType, boxRow: number, boxCol: number): boolean
 Checks if placing a value is valid.
 
 ```typescript
-isValidPlacement(board: BoardType, position: CellPosition): boolean
+isValidPlacement(board: BoardType, position: CellPosition): PlacementValidationResult
 ```
 
 **Throws:** `Error` if row or col is outside the range 0-8.
+
+**Returns:** `PlacementValidationResult` with `valid` and optional `reason`.
+
+---
+
+### `checkGroup(values, label)` 🔍
+
+Checks a group of values (row, column, or box) for duplicates.
+
+```typescript
+checkGroup(values: number[], label: string): string | null
+```
+
+**Returns:** The label if duplicate found, `null` otherwise.
+
+**Example:**
+
+```typescript
+import { checkGroup } from '@hackettyam/sudoku-tools'
+
+const values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const result = checkGroup(values, 'row 0')
+// result is null (no duplicates)
+
+const withDupes = [1, 1, 3, 4, 5, 6, 7, 8, 9]
+const result2 = checkGroup(withDupes, 'row 0')
+// result2 is "row 0"
+```
+
+---
+
+### `getColumnValues(board, col)` 📊
+
+Extracts all values from a specific column.
+
+```typescript
+getColumnValues(board: BoardType, col: number): number[]
+```
+
+**Example:**
+
+```typescript
+import { getColumnValues } from '@hackettyam/sudoku-tools'
+
+const values = getColumnValues(board, 0)
+// Returns: [5, 6, 7, 2, 5, 8, 3, 6, 9]
+```
+
+---
+
+### `getBoxValues(board, boxRow, boxCol)` 📦
+
+Extracts all values from a 3x3 box.
+
+```typescript
+getBoxValues(board: BoardType, boxRow: number, boxCol: number): number[]
+```
+
+**Parameters:**
+- `boxRow`: Box row index (0-2)
+- `boxCol`: Box column index (0-2)
+
+**Example:**
+
+```typescript
+import { getBoxValues } from '@hackettyam/sudoku-tools'
+
+const values = getBoxValues(board, 0, 0)
+// Returns: [5, 3, 0, 6, 0, 0, 0, 9, 8]
+```
 
 ---
 
