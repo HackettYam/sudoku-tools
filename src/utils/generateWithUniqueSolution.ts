@@ -41,8 +41,6 @@ export function generateWithUniqueSolution(difficulty: Difficulty = Difficulty.N
 
     const originalValue = board[row][col]
 
-    if (originalValue === SUDOKU_EMPTY_CELL) continue
-
     board[row][col] = SUDOKU_EMPTY_CELL
 
     if (hasUniqueSolution(board)) {
