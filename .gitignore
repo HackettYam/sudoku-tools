@@ -16,3 +16,6 @@ dist/
 .opencode/planifications/
 opencode.json
 AGENTS.md
+
+# Benchmark results
+benchmark-results/

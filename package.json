@@ -38,13 +38,6 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-<<<<<<< HEAD
-    "build": "pnpm build:clean && pnpm build:esm && pnpm build:cjs",
-    "build:esm": "tsc -p tsconfig.build.json",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:clean": "rm -rf dist",
-    "prepublishOnly": "pnpm build",
-=======
     "bench": "tsx scripts/benchmark.ts",
     "build": "pnpm build:clean && pnpm build:esm && pnpm build:cjs",
     "build:esm": "tsc -p tsconfig.build.json",
@@ -52,7 +45,6 @@
     "build:clean": "rm -rf dist",
     "build:html": "esbuild src/index.ts --bundle --format=iife --outfile=examples/html/bundle.js --global-name=SudokuTools",
     "prepublishOnly": "pnpm build",
->>>>>>> c8c273b (docs(readme): Add playable Sudoku examples with CLI library integration)
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
@@ -91,6 +83,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
     "standard-version": "^9.5.0",
+    "tsx": "^4.19.0",
     "typescript": "^5",
     "vitest": "^2.1.8"
   }

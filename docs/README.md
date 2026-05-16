@@ -23,6 +23,7 @@ Welcome to the **@hackettyam/sudoku-tools** documentation! 🎯
 - [**💡 Advanced Examples**](./guides/examples.md) - Real-world usage for custom implements
 - [**🔄 Board Transformations**](./guides/transformations.md) - Rotate, mirror, and shuffle
 - [**✅ Validation**](./guides/validation.md) - Check moves and board states
+- [**📊 Performance Benchmark**](./guides/benchmark.md) - Track generation and solving performance
 
 ---
 
