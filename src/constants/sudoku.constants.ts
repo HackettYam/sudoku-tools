@@ -29,12 +29,26 @@ export const SUDOKU_BASE_BOARD = [
 ]
 
 /**
- * Mapping of difficulty levels to number of hints
+ * Mapping of difficulty levels to the number of hints (filled cells).
+ *
+ * Higher hints = easier puzzle (more cells pre-filled).
+ * Lower hints = harder puzzle (fewer cells pre-filled).
+ *
+ * This constant is readonly and uses literal types for better TypeScript inference.
+ *
+ * @example
+ * ```typescript
+ * import { SUDOKU_DIFFICULTY_HINTS, Difficulty } from '@hackettyam/sudoku-tools'
+ *
+ * console.log(`Normal difficulty has ${SUDOKU_DIFFICULTY_HINTS[Difficulty.Normal]} hints`)
+ * ```
+ *
+ * @readonly
  */
-export const SUDOKU_DIFFICULTY_HINTS: Record<Difficulty, DifficultyHints> = {
+export const SUDOKU_DIFFICULTY_HINTS = {
   [Difficulty.Novice]: DifficultyHints.Novice,
   [Difficulty.Easy]: DifficultyHints.Easy,
   [Difficulty.Normal]: DifficultyHints.Normal,
   [Difficulty.Hard]: DifficultyHints.Hard,
   [Difficulty.Expert]: DifficultyHints.Expert,
-}
+} as const satisfies Readonly<Record<Difficulty, DifficultyHints>>
