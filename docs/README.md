@@ -19,6 +19,7 @@ Welcome to the **@hackettyam/sudoku-tools** documentation! 🎯
 
 ### 📘 Guides
 
+- [**🎮 Playground**](./guides/playground.md) - Runnable examples (CLI, HTML, React)
 - [**💡 Advanced Examples**](./guides/examples.md) - Real-world usage for custom implements
 - [**🔄 Board Transformations**](./guides/transformations.md) - Rotate, mirror, and shuffle
 - [**✅ Validation**](./guides/validation.md) - Check moves and board states

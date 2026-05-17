@@ -21,6 +21,7 @@ export default [
       '*.config.ts',
       'commitlint.config.js',
       '.lintstagedrc.json',
+      'examples/**',
     ],
   },
 

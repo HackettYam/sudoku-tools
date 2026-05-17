@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sudoku - Playable Browser Game</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-board: #0f3460;
+      --cell-bg: #1a1a2e;
+      --cell-bg-fixed: #16213e;
+      --cell-selected: #e94560;
+      --cell-highlight: #533483;
+      --cell-error: #ff6b6b;
+      --cell-correct: #4ecca3;
+      --text-primary: #eaeaea;
+      --text-fixed: #4ecca3;
+      --text-user: #e94560;
+      --border-color: #533483;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      color: var(--cell-correct);
+    }
+
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .controls select, .controls button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .controls button:hover {
+      background: var(--cell-selected);
+      transform: translateY(-2px);
+    }
+
+    .controls select:hover {
+      border-color: var(--cell-correct);
+    }
+
+    .game-info {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .game-info span {
+      font-weight: bold;
+      color: var(--cell-correct);
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(9, 50px);
+      grid-template-rows: repeat(9, 50px);
+      gap: 1px;
+      background: var(--border-color);
+      border: 3px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .cell {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--cell-bg);
+    }
+
+    .cell:hover {
+      background: var(--cell-highlight);
+    }
+
+    .cell.fixed {
+      background: var(--cell-bg-fixed);
+      color: var(--text-fixed);
+    }
+
+    .cell.selected {
+      background: var(--cell-selected) !important;
+      color: white;
+      transform: scale(1.1);
+      z-index: 1;
+    }
+
+    .cell.highlight {
+      background: var(--cell-highlight);
+    }
+
+    .cell.error {
+      background: var(--cell-error);
+      animation: shake 0.3s;
+    }
+
+    .cell.same-number {
+      background: rgba(78, 204, 163, 0.3);
+    }
+
+    .cell:nth-child(3n) { border-right: 2px solid var(--border-color); }
+    .cell:nth-child(9n) { border-right: none; }
+    .cell:nth-child(n+19):nth-child(-n+27),
+    .cell:nth-child(n+46):nth-child(-n+54) {
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .numpad {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .numpad button {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      font-weight: bold;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .numpad button:hover {
+      background: var(--cell-selected);
+      transform: scale(1.1);
+    }
+
+    .numpad button.clear {
+      background: var(--cell-error);
+      font-size: 18px;
+    }
+
+    .message {
+      margin-top: 20px;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 18px;
+      text-align: center;
+      min-height: 50px;
+    }
+
+    .message.success {
+      background: rgba(78, 204, 163, 0.2);
+      border: 2px solid var(--cell-correct);
+      color: var(--cell-correct);
+    }
+
+    .message.error {
+      background: rgba(255, 107, 107, 0.2);
+      border: 2px solid var(--cell-error);
+      color: var(--cell-error);
+    }
+
+    .instructions {
+      margin-top: 30px;
+      padding: 20px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      max-width: 500px;
+      text-align: left;
+    }
+
+    .instructions h3 {
+      color: var(--cell-correct);
+      margin-bottom: 10px;
+    }
+
+    .instructions ul {
+      list-style: none;
+    }
+
+    .instructions li {
+      margin: 8px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .instructions li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--cell-selected);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-secondary);
+      padding: 40px;
+      border-radius: 16px;
+      text-align: center;
+      border: 3px solid var(--cell-correct);
+    }
+
+    .modal-content h2 {
+      font-size: 36px;
+      color: var(--cell-correct);
+      margin-bottom: 20px;
+    }
+
+    .modal-content p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    @media (max-width: 500px) {
+      .board {
+        grid-template-columns: repeat(9, 36px);
+        grid-template-rows: repeat(9, 36px);
+      }
+      .cell {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+      .numpad button {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 Sudoku</h1>
+
+  <div class="controls">
+    <select id="difficulty">
+      <option value="easy">Easy</option>
+      <option value="medium" selected>Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+    <button id="newGame">New Game</button>
+    <button id="hint">Get Hint</button>
+    <button id="solve">Solve</button>
+  </div>
+
+  <div class="game-info">
+    <div>Moves: <span id="moves">0</span></div>
+    <div>Time: <span id="timer">0:00</span></div>
+    <div>Errors: <span id="errors">0</span></div>
+  </div>
+
+  <div class="board" id="board"></div>
+
+  <div class="numpad" id="numpad">
+    <button data-value="1">1</button>
+    <button data-value="2">2</button>
+    <button data-value="3">3</button>
+    <button data-value="4">4</button>
+    <button data-value="5">5</button>
+    <button data-value="6">6</button>
+    <button data-value="7">7</button>
+    <button data-value="8">8</button>
+    <button data-value="9">9</button>
+    <button class="clear" data-value="0">Clear</button>
+  </div>
+
+  <div class="message" id="message"></div>
+
+  <div class="instructions">
+    <h3>How to Play</h3>
+    <ul>
+      <li>Click a cell to select it</li>
+      <li>Use the number pad or keyboard (1-9) to enter a number</li>
+      <li>Press 0 or Clear to erase a cell</li>
+      <li>Use arrow keys to navigate between cells</li>
+      <li>Fill the grid so each row, column, and 3×3 box contains 1-9</li>
+      <li>Use "Get Hint" if you're stuck (max 5 hints)</li>
+    </ul>
+  </div>
+
+  <div class="modal" id="winModal">
+    <div class="modal-content">
+      <h2>🎉 You Win! 🎉</h2>
+      <p>Congratulations! You solved the puzzle!</p>
+      <p id="winStats"></p>
+      <button onclick="closeModal()">Play Again</button>
+    </div>
+  </div>
+
+  <!-- Load sudoku-tools library from local bundle -->
+  <script src="bundle.js"></script>
+
+  <script>
+    // ==========================================
+    // GAME STATE
+    // ==========================================
+    let board = null;
+    let solved = null;
+    let initialBoard = [];
+    let selectedCell = null;
+    let moves = 0;
+    let errors = 0;
+    let hintsUsed = 0;
+    let timerInterval = null;
+    let startTime = null;
+    let isSolvedGame = false;
+
+    // DOM
+    const boardEl = document.getElementById('board');
+    const difficultyEl = document.getElementById('difficulty');
+    const movesEl = document.getElementById('moves');
+    const timerEl = document.getElementById('timer');
+    const errorsEl = document.getElementById('errors');
+    const messageEl = document.getElementById('message');
+    const winModal = document.getElementById('winModal');
+
+    // Map HTML select values to library Difficulty enum
+    const difficultyMap = {
+      'easy': SudokuTools.Difficulty.Easy,
+      'medium': SudokuTools.Difficulty.Normal,
+      'hard': SudokuTools.Difficulty.Hard
+    };
+
+    // ==========================================
+    // GAME FUNCTIONS
+    // ==========================================
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      startTime = Date.now();
+      timerInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      }, 1000);
+    }
+
+    function initializeGame() {
+      const difficultyKey = difficultyEl.value;
+      const difficulty = difficultyMap[difficultyKey];
+
+      // Use sudoku-tools library
+      const puzzle = SudokuTools.generatePuzzle(difficulty);
+      board = puzzle.board;
+      solved = puzzle.solved;
+      initialBoard = board.map(row => [...row]);
+      selectedCell = null;
+      moves = 0;
+      errors = 0;
+      hintsUsed = 0;
+      isSolvedGame = false;
+      movesEl.textContent = '0';
+      errorsEl.textContent = '0';
+      messageEl.textContent = '';
+      messageEl.className = 'message';
+      startTimer();
+      renderBoard();
+    }
+
+    function renderBoard() {
+      boardEl.innerHTML = '';
+      for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          cell.dataset.row = row;
+          cell.dataset.col = col;
+          const value = board[row][col];
+          if (value !== 0) {
+            cell.textContent = value;
+            if (initialBoard[row][col] !== 0) cell.classList.add('fixed');
+          }
+          if (selectedCell && selectedCell.row === row && selectedCell.col === col) cell.classList.add('selected');
+          cell.addEventListener('click', () => selectCell(row, col));
+          boardEl.appendChild(cell);
+        }
+      }
+    }
+
+    function selectCell(row, col) {
+      if (isSolvedGame) return;
+      selectedCell = { row, col };
+      renderBoard();
+    }
+
+    function placeNumber(value) {
+      if (!selectedCell || isSolvedGame) return;
+      const { row, col } = selectedCell;
+      if (initialBoard[row][col] !== 0) {
+        showMessage('Cannot modify initial puzzle cells!', 'error');
+        return;
+      }
+      if (value === 0) {
+        board[row][col] = 0;
+        moves++;
+        movesEl.textContent = moves;
+        renderBoard();
+        return;
+      }
+      // Use library's isValidPlacement
+      const result = SudokuTools.isValidPlacement(board, { row, col, value });
+      if (!result.valid) {
+        errors++;
+        errorsEl.textContent = errors;
+        const cellEl = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+        cellEl.classList.add('error');
+        setTimeout(() => cellEl.classList.remove('error'), 300);
+        showMessage(`Invalid move! Conflicts with ${result.reason}.`, 'error', true);
+        return;
+      }
+      board[row][col] = value;
+      moves++;
+      movesEl.textContent = moves;
+      renderBoard();
+      // Check win using library's isSolved
+      if (SudokuTools.isSolved(board, solved)) {
+        isSolvedGame = true;
+        clearInterval(timerInterval);
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        document.getElementById('winStats').textContent = `Moves: ${moves} | Time: ${minutes}:${seconds.toString().padStart(2, '0')} | Errors: ${errors}`;
+        winModal.classList.add('show');
+        showMessage('🎉 Congratulations! You solved it!', 'success');
+      }
+    }
+
+    function getHint() {
+      if (hintsUsed >= 5) {
+        showMessage('No more hints available!', 'error');
+        return;
+      }
+      // Use library's getHint
+      const hint = SudokuTools.getHint(board, solved);
+      if (!hint) {
+        showMessage(board.every(r => r.every(c => c !== 0)) ? 'Puzzle is complete!' : 'No hint available!', 'error');
+        return;
+      }
+      board[hint.row][hint.col] = hint.value;
+      hintsUsed++;
+      moves++;
+      movesEl.textContent = moves;
+      renderBoard();
+      showMessage(`💡 Hint: Row ${hint.row + 1}, Col ${hint.col + 1} = ${hint.value}`, 'success');
+      if (SudokuTools.isSolved(board, solved)) {
+        isSolvedGame = true;
+        clearInterval(timerInterval);
+        winModal.classList.add('show');
+      }
+    }
+
+    function showSolveConfirmation() {
+      if (confirm('Are you sure you want to see the solution?')) {
+        // Use library's solvePuzzle
+        const result = SudokuTools.solvePuzzle(board);
+        if (result.board) {
+          board = result.board;
+          isSolvedGame = true;
+          clearInterval(timerInterval);
+          renderBoard();
+          showMessage('Puzzle solved! 🎉', 'success');
+        } else {
+          showMessage('Could not solve the puzzle!', 'error');
+        }
+      }
+    }
+
+    function showMessage(text, type, autoClear = false) {
+      messageEl.textContent = text;
+      messageEl.className = `message ${type}`;
+      if (autoClear) {
+        setTimeout(() => {
+          if (messageEl.textContent === text) {
+            messageEl.textContent = '';
+            messageEl.className = 'message';
+          }
+        }, 3000);
+      }
+    }
+
+    function closeModal() {
+      winModal.classList.remove('show');
+      initializeGame();
+    }
+
+    // ==========================================
+    // EVENT LISTENERS
+    // ==========================================
+    document.getElementById('newGame').addEventListener('click', initializeGame);
+    document.getElementById('hint').addEventListener('click', getHint);
+    document.getElementById('solve').addEventListener('click', showSolveConfirmation);
+    difficultyEl.addEventListener('change', initializeGame);
+
+    document.querySelectorAll('.numpad button').forEach(btn => {
+      btn.addEventListener('click', () => placeNumber(parseInt(btn.dataset.value)));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!selectedCell || isSolvedGame) return;
+      const { row, col } = selectedCell;
+      if (e.key >= '1' && e.key <= '9') placeNumber(parseInt(e.key));
+      else if (e.key === '0' || e.key === 'Backspace') placeNumber(0);
+      else if (e.key === 'ArrowUp' && row > 0) selectCell(row - 1, col);
+      else if (e.key === 'ArrowDown' && row < 8) selectCell(row + 1, col);
+      else if (e.key === 'ArrowLeft' && col > 0) selectCell(row, col - 1);
+      else if (e.key === 'ArrowRight' && col < 8) selectCell(row, col + 1);
+    });
+
+    // Start game
+    initializeGame();
+  </script>
+</body>
+</html>

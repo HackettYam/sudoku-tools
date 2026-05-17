@@ -1,0 +1,339 @@
+/* Sudoku React Game Styles */
+
+:root {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+  --accent-primary: #58a6ff;
+  --accent-secondary: #238636;
+  --accent-warning: #d29922;
+  --accent-error: #f85149;
+  --accent-success: #3fb950;
+  --text-primary: #c9d1d9;
+  --text-secondary: #8b949e;
+  --border-color: #30363d;
+  --cell-bg: #0d1117;
+  --cell-fixed: #161b22;
+  --cell-selected: #58a6ff;
+  --cell-hover: #21262d;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica', 'Arial', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  outline: none;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: var(--accent-success);
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.difficulty-select {
+  padding: 10px 15px;
+  font-size: 1rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.difficulty-select:hover {
+  border-color: var(--accent-primary);
+}
+
+.difficulty-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent-secondary);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(35, 134, 54, 0.4);
+}
+
+.btn-secondary {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(88, 166, 255, 0.4);
+}
+
+.btn-warning {
+  background: var(--accent-warning);
+  color: #1a1a2e;
+}
+
+.btn-warning:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(210, 153, 34, 0.4);
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-success);
+}
+
+/* Win Banner */
+.win-banner {
+  background: linear-gradient(135deg, var(--accent-success), var(--accent-primary));
+  color: white;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* Board */
+.sudoku-board {
+  display: grid;
+  grid-template-columns: repeat(9, 45px);
+  grid-template-rows: repeat(9, 45px);
+  gap: 1px;
+  background: var(--border-color);
+  border: 3px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.sudoku-cell {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: var(--cell-bg);
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.sudoku-cell:hover:not(.fixed) {
+  background: var(--cell-hover);
+}
+
+.sudoku-cell.fixed {
+  background: var(--cell-fixed);
+  color: var(--accent-success);
+  cursor: default;
+}
+
+.sudoku-cell.user {
+  color: var(--accent-primary);
+}
+
+.sudoku-cell.selected {
+  background: var(--cell-selected) !important;
+  color: white !important;
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: 0 0 10px var(--accent-primary);
+  border-radius: 4px;
+}
+
+/* Box borders */
+.sudoku-cell:nth-child(3n) {
+  border-right: 2px solid var(--border-color);
+}
+
+.sudoku-cell:nth-child(9n) {
+  border-right: none;
+}
+
+.sudoku-cell:nth-child(n+19):nth-child(-n+27),
+.sudoku-cell:nth-child(n+46):nth-child(-n+54) {
+  border-bottom: 2px solid var(--border-color);
+}
+
+/* Numpad */
+.numpad {
+  display: flex;
+  gap: 8px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 450px;
+}
+
+.num-btn {
+  width: 45px;
+  height: 45px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.num-btn:hover:not(:disabled) {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: white;
+  transform: scale(1.1);
+}
+
+.num-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.num-btn.clear {
+  background: var(--accent-error);
+  border-color: var(--accent-error);
+  font-size: 1.1rem;
+}
+
+.num-btn.clear:hover:not(:disabled) {
+  background: #ff6b6b;
+  box-shadow: 0 4px 12px rgba(248, 81, 73, 0.4);
+}
+
+/* Instructions */
+.instructions {
+  margin-top: 30px;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  max-width: 450px;
+  text-align: left;
+}
+
+.instructions h3 {
+  color: var(--accent-success);
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.instructions ul {
+  list-style: none;
+}
+
+.instructions li {
+  margin: 8px 0;
+  padding-left: 20px;
+  position: relative;
+  color: var(--text-secondary);
+}
+
+.instructions li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent-primary);
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .sudoku-board {
+    grid-template-columns: repeat(9, 36px);
+    grid-template-rows: repeat(9, 36px);
+  }
+  
+  .sudoku-cell {
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+  }
+  
+  .num-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+}

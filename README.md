@@ -77,6 +77,7 @@ Explore the complete documentation in [`docs/`](./docs/README.md):
 | 📦 [**Models & Types**](./docs/api/models.md) | TypeScript types and interfaces |
 | 🔢 [**Constants**](./docs/api/constants.md) | Grid and difficulty constants |
 | 💡 [**Examples**](./docs/guides/examples.md) | Real-world usage patterns |
+| 🎮 [**Playground**](./docs/guides/playground.md) | Runnable examples (CLI, HTML, React) |
 | 🔄 [**Transformations**](./docs/guides/transformations.md) | Rotate, mirror, shuffle boards |
 | ✅ [**Validation**](./docs/guides/validation.md) | Check moves and board states |
 
