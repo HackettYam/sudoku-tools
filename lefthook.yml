@@ -1,0 +1,11 @@
+pre-commit:
+  files: '{staged_files}'
+  glob: '*.{ts,js}'
+  pipelines:
+    - name: eslint
+      run: npx eslint --fix {files}
+
+commit-msg:
+  pipelines:
+    - name: commitlint
+      run: npx --no -- commitlint --edit {1}
