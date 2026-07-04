@@ -9,3 +9,10 @@ dist/
 *.d.ts
 *.js
 *.map
+
+# OpenCode agent config (internal tooling, not library code)
+.opencode/agents/
+.opencode/memory/
+.opencode/planifications/
+opencode.json
+AGENTS.md
