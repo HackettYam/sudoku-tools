@@ -5,7 +5,7 @@ import { cloneBoard } from '../cloneBoard'
 import { isValidPlacement } from '../isValidPlacement'
 
 const createEmptyBoard = (): CellValue[][] => {
-  return Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => 0 as CellValue))
+  return Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => 0))
 }
 
 describe('isValidPlacement - Input Validation', () => {

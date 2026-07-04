@@ -29,7 +29,7 @@ function makeBoard(overrides: Partial<Record<number, number[]>>): BoardType {
       board.push([...EMPTY_ROW])
     }
   }
-  return board as BoardType
+  return board
 }
 
 describe('detectInvalidityReason', () => {

@@ -114,7 +114,7 @@ describe('solvePuzzle', () => {
       [7, 8, 9],
     ]
 
-    const result = solvePuzzle(board as BoardType)
+    const result = solvePuzzle(board)
 
     expect(result.board).toBeNull()
   })
