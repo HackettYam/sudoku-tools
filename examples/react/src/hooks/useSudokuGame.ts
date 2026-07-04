@@ -194,11 +194,12 @@ const initialState: GameState = {
   initialBoard: createEmptyBoard(),
   selectedCell: null,
   isComplete: false,
+  gameStarted: false,
   stats: {
     moves: 0,
     hintsUsed: 0,
     errors: 0,
-    startTime: Date.now(),
+    startTime: 0,
     elapsedSeconds: 0,
   },
   difficulty: 'medium',
@@ -262,6 +263,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         initialBoard,
         selectedCell: null,
         isComplete: false,
+        gameStarted: true,
         difficulty: action.payload,
         stats: {
           moves: 0,
@@ -269,6 +271,17 @@ function gameReducer(state: GameState, action: GameAction): GameState {
           errors: 0,
           startTime: Date.now(),
           elapsedSeconds: 0,
+        },
+      };
+    }
+    
+    case 'TICK': {
+      if (state.isComplete || !state.gameStarted) return state;
+      return {
+        ...state,
+        stats: {
+          ...state.stats,
+          elapsedSeconds: Math.floor((Date.now() - state.stats.startTime) / 1000),
         },
       };
     }
@@ -349,16 +362,16 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 export function useSudokuGame() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
   
-  // Timer effect
+  // Timer effect — only runs when a game is active
   useEffect(() => {
-    if (state.isComplete) return;
+    if (!state.gameStarted || state.isComplete) return;
     
     const interval = setInterval(() => {
-      // Force re-render for timer
+      dispatch({ type: 'TICK' });
     }, 1000);
     
     return () => clearInterval(interval);
-  }, [state.isComplete]);
+  }, [state.gameStarted, state.isComplete]);
   
   const selectCell = useCallback((row: number, col: number) => {
     dispatch({ type: 'SELECT_CELL', payload: { row, col } });
@@ -385,9 +398,7 @@ export function useSudokuGame() {
     dispatch({ type: 'SOLVE' });
   }, []);
   
-  const elapsed = state.isComplete 
-    ? state.stats.elapsedSeconds 
-    : Math.floor((Date.now() - state.stats.startTime) / 1000);
+  const elapsed = state.gameStarted ? state.stats.elapsedSeconds : 0;
   
   return {
     board: state.board,

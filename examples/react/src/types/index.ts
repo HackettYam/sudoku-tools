@@ -24,6 +24,7 @@ export interface GameState {
   initialBoard: number[][];
   selectedCell: CellPosition | null;
   isComplete: boolean;
+  gameStarted: boolean;
   stats: GameStats;
   difficulty: Difficulty;
 }
@@ -34,4 +35,5 @@ export type GameAction =
   | { type: 'NEW_GAME'; payload: Difficulty }
   | { type: 'SET_DIFFICULTY'; payload: Difficulty }
   | { type: 'USE_HINT' }
-  | { type: 'SOLVE' };
+  | { type: 'SOLVE' }
+  | { type: 'TICK' };
