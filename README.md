@@ -4,7 +4,7 @@
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
-[![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)]()
+[![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](#)
 
 ## ✨ Features
 
@@ -167,6 +167,29 @@ import type {
   SudokuPuzzleStatistics, // Progress tracking
 } from '@hackettyam/sudoku-tools'
 ```
+
+## 📊 Performance Benchmark
+
+Track generation and solving performance across difficulty levels:
+
+```bash
+pnpm bench
+```
+
+This runs 10 iterations per difficulty and outputs:
+
+```
+┌─────────────────┬─────────────┬───────────┬───────────┬─────────┐
+│ Difficulty      │ Metric      │ Avg (ms)  │ Min (ms)  │ Max (ms)│
+├─────────────────┼─────────────┼───────────┼───────────┼─────────┤
+│ Novice          │ Generation  │      0.09 │      0.05 │      0.19 │
+│ Novice          │ Solving     │      0.63 │      0.45 │      1.35 │
+│ Expert          │ Generation  │      0.05 │      0.04 │      0.08 │
+│ Expert          │ Solving     │     14.72 │     14.49 │     15.33 │
+└─────────────────┴─────────────┴───────────┴───────────┴─────────┘
+```
+
+Results are saved to `benchmark-results/latest.md`. See [`docs/guides/benchmark.md`](./docs/guides/benchmark.md) for detailed documentation.
 
 ## 📄 License
 

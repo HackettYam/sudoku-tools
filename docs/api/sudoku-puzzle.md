@@ -417,6 +417,18 @@ puzzle.reset()
 
 ---
 
+## 🔗 Type Alias
+
+### `SudokuPuzzleType`
+
+Type alias for the `SudokuPuzzle` class. Use this when you need the type without instantiating.
+
+```typescript
+import type { SudokuPuzzleType } from '@hackettyam/sudoku-tools'
+```
+
+---
+
 ## 🔗 See Also
 
 - 🚀 [Getting Started](../getting-started.md) - Quick start guide

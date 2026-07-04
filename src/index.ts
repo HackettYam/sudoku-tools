@@ -20,18 +20,21 @@ export {
   type BoardType,
   type BoardCellType,
   type BoardReadOnlyType,
+  type CellPosition,
   type CellValue,
   Difficulty,
   DifficultyHints,
   type DifficultyResult,
   type DifficultyType,
-  type SudokuState,
   type GeneratePuzzleResult,
   type HintResult,
   type MirrorDirection,
+  type PlacementValidationResult,
   type SetCellOptions,
   type SolveResult,
-  type PlacementValidationResult,
+  type SudokuPuzzleOptions,
+  type SudokuPuzzleStatistics,
+  type SudokuState,
 } from './models'
 
 // Utils

@@ -269,7 +269,7 @@ if (hint) {
 
 ## 📚 Further Reading
 
-- [**API Reference**](./api/utilities.md) - All available functions
+- [**API Reference**](../api/utilities.md) - All available functions
 - [**Examples Guide**](./examples.md) - More usage patterns
 - [**Validation Guide**](./validation.md) - Move and board validation
 

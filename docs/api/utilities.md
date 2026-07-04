@@ -544,6 +544,8 @@ analyzeCandidates(board: BoardType, emptyCount: number): AnalysisResult
 
 ---
 
+> ℹ️ **Internal:** Not part of the public API. Used internally by `getDifficulty()`.
+
 ### `calculateDifficultyScore(params)`
 
 Calculates numeric difficulty score.
@@ -699,6 +701,8 @@ validateCellIndex(9, 0)  // false
 
 ---
 
+> ℹ️ **Internal:** Not exported from the public API. For internal use only.
+
 ### `backtrack(board)` 🧠
 
 Recursive backtracking solver. Mutates board.
@@ -708,6 +712,8 @@ backtrack(board: BoardType): boolean
 ```
 
 ---
+
+> ℹ️ **Internal:** Not exported from the public API. For internal use only.
 
 ### `shuffleArray(array)` 🎲
 

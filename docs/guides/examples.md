@@ -266,7 +266,8 @@ autoSolve(puzzle, (row, col, value) => {
 import {
   serializeBoard,
   deserializeBoard,
-  type DifficultyType
+  type DifficultyType,
+  type SudokuPuzzle,
 } from '@hackettyam/sudoku-tools'
 
 interface SavedGame {
