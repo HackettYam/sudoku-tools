@@ -66,14 +66,12 @@ export const SUDOKU_BASE_BOARD = [
  * Higher hints = easier puzzle (more cells pre-filled).
  * Lower hints = harder puzzle (fewer cells pre-filled).
  *
-
  * @example
  * ```typescript
  * import { SUDOKU_DIFFICULTY_HINTS, Difficulty } from '@hackettyam/sudoku-tools'
  *
  * console.log(`Normal difficulty has ${SUDOKU_DIFFICULTY_HINTS[Difficulty.Normal]} hints`)
  * ```
-
  */
 export const SUDOKU_DIFFICULTY_HINTS = {
   [Difficulty.Novice]: DifficultyHints.Novice,

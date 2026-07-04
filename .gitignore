@@ -11,9 +11,7 @@ dist/
 *.map
 
 # OpenCode agent config (internal tooling, not library code)
-.opencode/agents/
-.opencode/memory/
-.opencode/planifications/
+.opencode/
 opencode.json
 AGENTS.md
 
