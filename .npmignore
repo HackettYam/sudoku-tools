@@ -1,5 +1,7 @@
 # Source files
 src/
+scripts/
+examples/
 
 # Config files
 *.config.ts
@@ -11,17 +13,24 @@ eslint.config.mjs
 .prettierrc*
 .editorconfig
 .versionrc*
+.release-it*
+lefthook.yml
 
 # Test files
 **/*.test.ts
 **/__tests__/
 coverage/
+tests/
+benchmark-results/
 
 # Development
 .husky/
 .github/
 .vscode/
 node_modules/
+.opencode/
+opencode.json
+AGENTS.md
 
 # Git
 .git/

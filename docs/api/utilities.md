@@ -314,6 +314,30 @@ console.log(`${emptyCells.length} cells to fill`)
 
 ---
 
+### `getAllCellPositions()` 📍
+
+Gets all 81 cell positions in random order. Useful for iteration and shuffling.
+
+```typescript
+getAllCellPositions(): [number, number][]
+```
+
+**Example:**
+
+```typescript
+import { getAllCellPositions } from '@hackettyam/sudoku-tools'
+
+const positions = getAllCellPositions()
+console.log(positions.length) // 81
+
+// Random iteration order
+positions.forEach(([row, col]) => {
+  console.log(`Cell at (${row}, ${col})`)
+})
+```
+
+---
+
 ### `getInvalidCells(board, solved)` ❌
 
 Gets all cells with incorrect values. Highlight mistakes!
@@ -419,6 +443,27 @@ isValidPlacement(board: BoardType, position: CellPosition): PlacementValidationR
 **Throws:** `Error` if row or col is outside the range 0-8.
 
 **Returns:** `PlacementValidationResult` with `valid` and optional `reason`.
+
+---
+
+### `validateCellIndex(row, col)` ✅
+
+Validates that row and column indices are within Sudoku bounds (0-8).
+
+```typescript
+validateCellIndex(row: number, col: number): boolean
+```
+
+**Example:**
+
+```typescript
+import { validateCellIndex } from '@hackettyam/sudoku-tools'
+
+validateCellIndex(0, 0)  // true
+validateCellIndex(8, 8)  // true
+validateCellIndex(-1, 0) // false
+validateCellIndex(9, 0)  // false
+```
 
 ---
 
@@ -680,28 +725,7 @@ const restored = deserializeBoard(str)
 
 ## ⚙️ Internal Utilities
 
-### `validateCellIndex(row, col)` ✅
-
-Validates that row and column indices are within Sudoku bounds (0-8).
-
-```typescript
-validateCellIndex(row: number, col: number): boolean
-```
-
-**Example:**
-
-```typescript
-import { validateCellIndex } from '@hackettyam/sudoku-tools'
-
-validateCellIndex(0, 0)  // true
-validateCellIndex(8, 8)  // true
-validateCellIndex(-1, 0) // false
-validateCellIndex(9, 0)  // false
-```
-
----
-
-> ℹ️ **Internal:** Not exported from the public API. For internal use only.
+> ℹ️ The following functions are **not exported** from the public API. They are documented for reference only.
 
 ### `backtrack(board)` 🧠
 
@@ -713,24 +737,12 @@ backtrack(board: BoardType): boolean
 
 ---
 
-> ℹ️ **Internal:** Not exported from the public API. For internal use only.
-
 ### `shuffleArray(array)` 🎲
 
 Fisher-Yates shuffle. True randomness!
 
 ```typescript
 shuffleArray<T>(array: T[]): T[]
-```
-
----
-
-### `getAllCellPositions()`
-
-Gets all 81 positions in random order.
-
-```typescript
-getAllCellPositions(): [number, number][]
 ```
 
 ---
