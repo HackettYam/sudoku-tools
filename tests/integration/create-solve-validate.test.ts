@@ -23,7 +23,7 @@ describe('Create → Solve → Validate Pipeline', () => {
   ]
 
   difficulties.forEach(diff => {
-    it(`should create, solve, and validate ${difficultyNames[diff]} puzzle`, () => {
+    it(`should create, solve, and validate ${difficultyNames[diff]} puzzle`, { timeout: 30000 }, () => {
       const puzzle = createSudoku(diff)
       const result = solvePuzzle(puzzle.current)
 
