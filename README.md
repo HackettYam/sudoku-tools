@@ -191,6 +191,10 @@ This runs 10 iterations per difficulty and outputs:
 
 Results are saved to `benchmark-results/latest.md`. See [`docs/guides/benchmark.md`](./docs/guides/benchmark.md) for detailed documentation.
 
+## 📋 Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) for a detailed list of changes in each version.
+
 ## 📄 License
 
 MIT © hackettyam

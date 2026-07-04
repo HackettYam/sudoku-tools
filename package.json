@@ -1,6 +1,6 @@
 {
   "name": "@hackettyam/sudoku-tools",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A lightweight, zero-dependency TypeScript library for Sudoku puzzle generation, manipulation, and utilities.",
   "main": "./dist/cjs/index.js",
   "module": "./dist/index.js",
@@ -52,10 +52,10 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "release": "release-it",
-    "release:minor": "release-it --release-as minor",
-    "release:major": "release-it --release-as major",
-    "release:patch": "release-it --release-as patch"
+    "release": "release-it --config .release-it.mjs",
+    "release:minor": "release-it --release-as minor --config .release-it.mjs",
+    "release:major": "release-it --release-as major --config .release-it.mjs",
+    "release:patch": "release-it --release-as patch --config .release-it.mjs"
   },
   "overrides": {
     "handlebars": "^4.7.9",
@@ -74,7 +74,7 @@
     "@commitlint/config-conventional": "^19.6.0",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.17.0",
-    "@release-it/conventional-changelog": "^10.0.0",
+    "@release-it/conventional-changelog": "^11.0.1",
     "@stylistic/eslint-plugin": "^2.12.1",
     "@typescript-eslint/eslint-plugin": "^8.18.1",
     "@typescript-eslint/parser": "^8.18.1",
